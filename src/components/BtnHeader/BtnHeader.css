@@ -1,0 +1,109 @@
+@media only screen and (min-width: 900px) {
+
+    .btnContainerIzq {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+    
+    .btnContainerDrc {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-right: 10px;
+        gap: 20px;
+    }
+    
+    .btnHeader{
+        width: 120px;
+        height: 50px;
+        border-radius: 24px;
+        -webkit-border-radius: 24px;
+        -moz-border-radius: 24px;
+        -ms-border-radius: 24px;
+        -o-border-radius: 24px;
+        border: 0;
+        background-color: rgb(233,233,233);
+        color: black;
+        font-weight: 600;
+        font-size: 15px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        -webkit-transition: background-color 0.3s ease;
+        -moz-transition: background-color 0.3s ease;
+        -ms-transition: background-color 0.3s ease;
+        -o-transition: background-color 0.3s ease;
+    }
+    
+    
+    .btnHeader:hover {
+        background-color: rgb(204, 204, 204);
+    }
+    
+    .btnContainerDrc a:last-child .btnHeader{
+        background-color: rgb(230,0,35);
+        color: white;
+    }
+    
+    .btnContainerDrc a:last-child .btnHeader:hover {
+        background-color: rgb(182,0,0);
+    }
+    
+    }
+    
+    @media only screen and (max-width: 900px) {
+    
+    .btnContainerIzq {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 20px;
+    }
+    
+    .btnContainerDrc {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        margin-right: 2px;
+        gap: 5px;
+    }
+    
+    .btnHeader{
+        width: 90px;
+        height: 50px;
+        border-radius: 24px;
+        -webkit-border-radius: 24px;
+        -moz-border-radius: 24px;
+        -ms-border-radius: 24px;
+        -o-border-radius: 24px;
+        border: 0;
+        background-color: rgb(233,233,233);
+        color: black;
+        font-weight: 600;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        -webkit-transition: background-color 0.3s ease;
+        -moz-transition: background-color 0.3s ease;
+        -ms-transition: background-color 0.3s ease;
+        -o-transition: background-color 0.3s ease;
+    }
+    
+    
+    .btnHeader:hover {
+        background-color: rgb(204, 204, 204);
+    }
+    
+    .btnContainerDrc a:last-child .btnHeader{
+        background-color: rgb(230,0,35);
+        color: white;
+    }
+    
+    .btnContainerDrc a:last-child .btnHeader:hover {
+        background-color: rgb(182,0,0);
+    }
+    
+    }

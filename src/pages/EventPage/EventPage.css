@@ -1,0 +1,102 @@
+.event-details {
+    display: flex;
+    flex-direction: column;
+    padding-top: 20px;
+}
+
+.div-section {
+    display: flex;
+    gap: 100px;
+    padding: 20px;
+    justify-content: center;
+}
+
+.div-creator {
+    display: flex;
+    flex-direction: column;
+    border:  1px solid rgba(187, 169, 169, 0.315);
+    gap: 20px;
+    padding-bottom: 10px;
+    width: 100%;
+    align-items: center;
+}
+
+.creator-event {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.creator-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+}
+
+.creator-name {
+    font-size: 18px;
+}
+
+.event-image {
+    width: 70%;
+    max-width: 500px;
+    margin-top: 20px;
+}
+
+.event-name {
+    font-size: 35px;
+    margin-top: 20px;
+}
+
+.event-description {
+    margin-top: 10px;
+}
+
+.event-time {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.right-section {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.map-container {
+    
+}
+
+.event-location {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.attendees-container {
+    margin-top: 20px;
+}
+
+.attendees-container h1 {
+    font-size: 24px;
+}
+
+.attendees-container h2 {
+    font-size: 18px;
+}
+
+.attend-button {
+    margin-top: 10px;
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+}
+
+.attend-button:hover {
+    background-color: #0056b3;
+}
