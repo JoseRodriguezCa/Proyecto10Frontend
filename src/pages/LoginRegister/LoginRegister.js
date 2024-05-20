@@ -7,24 +7,27 @@ export const LoginRegister = (e, viewType) => {
   e.preventDefault();
   const divMain = document.querySelector(".div-main");
   const loginDiv = document.createElement("div");
+  const form = document.createElement("form");
   divMain.classList.add("hidden");
+  loginDiv.id = "login";
 
   setTimeout(() => {
     divMain.innerHTML = "";
     if (viewType === "login") {
-      login(loginDiv);
-      loginDiv.id = "login";
+      login(form);
+      form.classList = "login-form";
     } else if (viewType === "register") {
-      register(loginDiv);
-      loginDiv.id = "register";
+      register(form);
+      form.classList = "register-form";
     }
+    loginDiv.append(form);
     divMain.append(loginDiv);
     divMain.classList.remove("hidden");
   }, 500);
 };
 
-const login = (loginDiv) => {
-  const form = document.createElement("form");
+const login = (form) => {
+  
   const inputUserName = document.createElement("input");
   const inputPassword = document.createElement("input");
   const buttonInput = document.createElement("button");
@@ -32,7 +35,6 @@ const login = (loginDiv) => {
   const checkboxLabel = document.createElement("label");
   const checkboxInput = document.createElement("input");
   const l = Logo();
-  form.classList = "login-form";
   inputUserName.classList = "user-input";
   inputPassword.classList = "password-input";
   buttonInput.classList = "button-input";
@@ -55,7 +57,7 @@ const login = (loginDiv) => {
   checkboxLabel.prepend(checkboxInput);
   checkboxDiv.appendChild(checkboxLabel);
   form.append(l, inputUserName, inputPassword, checkboxDiv, buttonInput);
-  loginDiv.append(form);
+  
 
   form.addEventListener("submit", (e) =>
     submit(inputUserName, inputPassword, e, form, checkboxInput)
@@ -104,4 +106,83 @@ const submit = async (inputUserName, inputPassword, e, form, checkboxInput) => {
   localStorage.setItem("user", JSON.stringify(respuestaFinal.user));
   Home();
   HeaderReload();
+};
+
+const register = (form) => {
+  const inputUserName = document.createElement("input");
+  const inputPassword = document.createElement("input");
+  const inputEmail = document.createElement("input");
+  const fileLabel = document.createElement("label");
+  fileLabel.textContent = "Imagen de Perfil (archivo)";
+  const fileInput = document.createElement("input");
+  fileInput.type = "file";
+  fileInput.name = "file";
+  fileInput.classList = "file-input"
+  const buttonInput = document.createElement("button");
+  const checkboxDiv = document.createElement("div");
+  const checkboxLabel = document.createElement("label");
+  const checkboxInput = document.createElement("input");
+  const l = Logo();
+  inputUserName.classList = "user-input";
+  inputPassword.classList = "password-input";
+  buttonInput.classList = "button-input";
+  inputPassword.type = "password";
+  inputUserName.placeholder = "Nombre de Usuario";
+  inputPassword.placeholder = "*****";
+  inputEmail.placeholder = "Correo Electronico"
+  buttonInput.textContent = "Registrarse";
+  checkboxDiv.classList.add("checkbox-div");
+  checkboxLabel.classList.add("checkbox-label");
+  checkboxInput.classList.add("checkbox-input");
+  checkboxLabel.textContent = "Mostrar Contraseña";
+  checkboxInput.type = "checkbox";
+  checkboxInput.addEventListener("change", () => {
+    if (checkboxInput.checked === false) {
+      inputPassword.type = "password";
+    } else {
+      inputPassword.type = "text";
+    }
+  });
+  checkboxLabel.prepend(checkboxInput);
+  checkboxDiv.appendChild(checkboxLabel);
+  form.append(l, inputUserName, inputPassword, checkboxDiv,inputEmail,fileLabel,fileInput, buttonInput);
+
+  form.addEventListener("submit", (e) =>
+    submitRegister(inputUserName, inputPassword,inputEmail,fileInput, e, form)
+  );
+}
+
+const submitRegister = async (inputUserName, inputPassword,inputEmail,fileInput, e, form) => {
+  e.preventDefault();
+
+  const body = new FormData();
+  body.append("userName", inputUserName.value);
+  body.append("password", inputPassword.value);
+  body.append("email", inputEmail.value);
+  body.append("profileimg", fileInput.files[0]);
+
+  const res = await fetch("https://proyecto10-six.vercel.app/api/users/register", {
+    method: "POST",
+    body: body,
+  });
+
+  const pError = document.querySelector(".p-error");
+  if (pError) {
+    pError.remove();
+  }
+
+  if (res.status === 400) {
+    const errorResponse = await res.json();
+    alert(errorResponse.message || "Es necesario rellenar todos los campos")
+    console.log(errorResponse);
+    return;
+  }
+
+
+
+  if(res.ok) {
+    alert("Te has registrado con exito");
+    Home()
+  }
+
 };

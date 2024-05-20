@@ -38,8 +38,16 @@ const printEvents = (events, divMain) => {
     location.textContent = event.location;
 
     const description = document.createElement("p");
-    description.classList = "description";
-    description.textContent = event.description;
+    description.classList.add("description");
+    
+    const maxLength = 100;
+    let truncatedDescription = event.description;
+    
+    if (event.description.length > maxLength) {
+      truncatedDescription = event.description.substring(0, maxLength) + "...";
+    }
+    
+    description.textContent = truncatedDescription;
 
     const posterContainer = document.createElement("div");
     posterContainer.classList = "poster-container";

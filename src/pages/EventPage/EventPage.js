@@ -1,3 +1,5 @@
+import { crearBoton } from "../../components/BtnHeader/BtnHeader";
+import { Home } from "../Home/Home";
 import "./EventPage.css";
 
 export const EventPage = async (e, eventId, divMain) => {
@@ -16,6 +18,8 @@ export const EventPage = async (e, eventId, divMain) => {
 };
 
 const printOneEvent = async (event, divMain, eventId) => {
+  const token = localStorage.getItem("tokenUser");
+
   const divOneEvent = document.createElement("div");
   divOneEvent.classList.add("event-details");
 
@@ -27,6 +31,12 @@ const printOneEvent = async (event, divMain, eventId) => {
 
   const rightSection = document.createElement("div");
   rightSection.classList.add("right-section");
+
+  const divButton = document.createElement("div");
+  divButton.classList = "div-button-event";
+
+  const h1Description = document.createElement("h2");
+  h1Description.textContent = "Detalles";
 
   const divContainerCreator = document.createElement("div");
   divContainerCreator.classList.add("div-creator");
@@ -52,7 +62,7 @@ const printOneEvent = async (event, divMain, eventId) => {
 
   const eventDescription = document.createElement("p");
   eventDescription.classList.add("event-description");
-  eventDescription.textContent = event.description;
+  eventDescription.innerHTML  = event.description.replace(/\n/g, "<br>");
 
   const eventTime = document.createElement("div");
   eventTime.classList.add("event-time");
@@ -62,14 +72,21 @@ const printOneEvent = async (event, divMain, eventId) => {
 
   const pTime = document.createElement("p");
   pTime.classList = "p-time";
-  pTime.textContent = `${new Date(event.date).toLocaleString()}`;
+  pTime.textContent = new Date(event.date).toLocaleString();
 
-  const eventLocation = document.createElement("div");
+  const divLocation = document.createElement("div");
+  divLocation.classList = "div-location";
+
+  const eventLocation = document.createElement("a");
   eventLocation.classList.add("event-location");
+  eventLocation.href = `https://www.google.com/maps/dir/?api=1&destination=${encodeURIComponent(
+    event.location
+  )}`;
+  eventLocation.target = "_blank";
   eventLocation.textContent = event.location;
 
-  const locationLogo = document.createElement("i")
-  locationLogo.classList = "fa-solid fa-location-dot"
+  const locationLogo = document.createElement("i");
+  locationLogo.classList = "fa-solid fa-location-dot";
 
   const mapContainer = document.createElement("div");
   mapContainer.classList.add("map-container");
@@ -93,50 +110,70 @@ const printOneEvent = async (event, divMain, eventId) => {
   const attendeesContainer = document.createElement("div");
   attendeesContainer.classList.add("attendees-container");
 
-  const attendeesTitle = document.createElement("h1");
-  attendeesTitle.textContent = "Asistentes";
+  const attendeesDiv = document.createElement("div");
+  attendeesDiv.classList = "attendees-div";
 
-  const attendButton = document.createElement("button");
-  attendButton.textContent = "Asistiré";
-  attendButton.classList.add("attend-button");
+  const attendeesTitle = document.createElement("h1");
+  attendeesTitle.textContent = "Asistiran";
+
+
 
   const storedUser = JSON.parse(localStorage.getItem("user"));
-  let attenderName;
+  const attenderName = [];
   for (const attender of event.attender) {
-    const attendeesCount = document.createElement("h2");
-    attendeesCount.textContent = attender.name;
-    attenderName = attender.name;
+    const attendeesName = document.createElement("h2");
+    attendeesName.textContent = attender.name;
+    attenderName.push(attender.name);
 
-    attendeesContainer.append(attendeesCount);
+    attendeesDiv.append(attendeesName);
   }
 
-  attendButton.addEventListener("click", (e) =>
-    addAttender(e, eventId, divMain)
-  );
 
-  eventTime.append(timeLogo,pTime)
-  mapContainer.append(googleMapsLink);
+
+  attendeesContainer.append(attendeesDiv);
+  divLocation.append(locationLogo, eventLocation);
+  eventTime.append(timeLogo, pTime);
+  mapContainer.append(divLocation, googleMapsLink);
   attendeesContainer.prepend(attendeesTitle);
   divContainerCreator.append(eventName, creatorEvent);
   creatorEvent.append(creatorImage, creatorName);
   leftSection.append(
-    eventImage,
+    eventImage,h1Description,
     eventDescription,
-    attendeesContainer,
-    attendButton
+    attendeesContainer
   );
-  rightSection.append(eventTime, eventLocation, mapContainer);
+  
+  rightSection.append(eventTime, mapContainer, divButton);
   divSection.append(leftSection, rightSection);
   divOneEvent.append(divContainerCreator, divSection);
 
-  if (!storedUser || storedUser.userName === attenderName) {
-    attendButton.remove();
+  if (storedUser && !attenderName.includes(storedUser.userName)) {
+
+    const attendButton = crearBoton("Asistiré")
+    attendButton.classList.add("attend-button");
+    leftSection.append(attendButton);
+
+    attendButton.addEventListener("click", (e) =>
+      addAttender(e, eventId, divMain,token)
+    );
+  }
+  
+  if(storedUser && storedUser._id === event.user._id || storedUser.rol === "admin"){
+    console.log(storedUser.rol);
+    const editEvent = crearBoton("Editar");
+    const deleteBtn = crearBoton("Eliminar");
+
+    deleteBtn.addEventListener("click", (e) => deleteEvent(e,eventId,token));
+
+
+    divButton.append(editEvent, deleteBtn);
   }
 
   divMain.append(divOneEvent);
 };
 
-const addAttender = async (e, eventId, divMain) => {
+const addAttender = async (e, eventId, divMain,token) => {
+  e.preventDefault()
   const storedUser = JSON.parse(localStorage.getItem("user"));
 
   const objetoFinal = JSON.stringify({
@@ -146,7 +183,7 @@ const addAttender = async (e, eventId, divMain) => {
     user: storedUser._id,
   });
 
-  const token = localStorage.getItem("tokenUser");
+  
 
   const res = await fetch("https://proyecto10-six.vercel.app/api/attenders", {
     method: "POST",
@@ -161,3 +198,18 @@ const addAttender = async (e, eventId, divMain) => {
     EventPage(null, eventId, divMain);
   }
 };
+
+
+const deleteEvent = async (e,eventId,token) => {
+  e.preventDefault()
+  const res = await fetch(`https://proyecto10-six.vercel.app/api/events/${eventId}`, {
+    method: "DELETE",
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+  });
+  if(res.ok) {
+    console.log("evento eliminado");
+  }
+  Home();
+}
