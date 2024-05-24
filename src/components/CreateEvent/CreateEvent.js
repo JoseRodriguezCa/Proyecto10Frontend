@@ -5,17 +5,14 @@ export const CreateEvent = (e) => {
   e.preventDefault();
   const divMain = document.querySelector(".div-main");
 
-  // Verificar si el div con la clase "event-modal" ya existe
   if (!document.getElementById("event-modal")) {
     const modalNewEvent = document.createElement("div");
     modalNewEvent.id = "event-modal";
     modalNewEvent.classList.add("event-modal");
 
-    // Crear el formulario dentro del modal
     const form = document.createElement("form");
     form.classList.add("event-form");
 
-    // Crear los campos del formulario
     const titleLabel = document.createElement("label");
     titleLabel.textContent = "Título";
     const titleInput = document.createElement("input");
@@ -63,7 +60,6 @@ export const CreateEvent = (e) => {
     })
     
 
-    // Agregar los campos al formulario
     form.append(
       closeModal,
       titleLabel,
@@ -81,20 +77,16 @@ export const CreateEvent = (e) => {
       submitButton
     );
 
-    // Agregar el formulario al modal
     modalNewEvent.append(form);
 
-    // Agregar el modal al divMain
     divMain.append(modalNewEvent);
 
-    // Agregar un listener para cerrar el modal cuando se hace clic fuera de él
     window.addEventListener("click", (event) => {
       if (event.target === modalNewEvent) {
         modalNewEvent.remove();
       }
     });
 
-    // Manejar la subida del formulario
     form.addEventListener("submit", (e) => postEvent(e,form));
   }
 };

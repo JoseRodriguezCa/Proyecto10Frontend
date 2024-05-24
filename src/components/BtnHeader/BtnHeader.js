@@ -1,5 +1,6 @@
 import { Home } from "../../pages/Home/Home";
 import { LoginRegister } from "../../pages/LoginRegister/LoginRegister";
+import { ConfigUser } from "../ConfigUser/ConfigUser";
 import { CreateEvent } from "../CreateEvent/CreateEvent";
 import "./BtnHeader.css";
 
@@ -14,21 +15,26 @@ export const crearBoton = (texto) => {
 };
 
 export const containerBoton = () => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
   const btnContainerIzq = document.createElement("div");
   const btnIzquierda1 = crearBoton("Inicio");
   const btnIzquierda2 = crearBoton("Crear Evento");
   const btnContainerDrc = document.createElement("div");
   const btnDerecha1 = crearBoton("Iniciar Sesion");
   const btnDerecha2 = crearBoton("Registrarse");
-  btnDerecha1.addEventListener("click", (e) => LoginRegister(e, 'login'));
-  btnDerecha2.addEventListener("click", (e) => LoginRegister(e, 'register'));
+  btnDerecha1.addEventListener("click", (e) => LoginRegister(e, "login"));
+  btnDerecha2.addEventListener("click", (e) => LoginRegister(e, "register"));
   btnIzquierda1.addEventListener("click", (e) => Home(e));
-  btnIzquierda2.addEventListener("click", (e) => CreateEvent(e))
+  btnIzquierda2.addEventListener("click", (e) => CreateEvent(e));
   btnContainerIzq.classList = "btnContainerIzq";
   btnContainerDrc.classList = "btnContainerDrc";
   if (localStorage.getItem("tokenUser")) {
     const btnDerecha3 = crearBoton("Cerrar Sesion");
-    const btnDerecha4 = crearBoton("Ajustes");
+    const btnDerecha4 = document.createElement("img");
+    btnDerecha4.src = storedUser.profileimg;
+    btnDerecha4.classList = "creator-image";
+    btnDerecha4.classList.add("config-user");
+    btnDerecha4.addEventListener("click", (e) => ConfigUser(e));
     btnDerecha3.addEventListener("click", () => {
       localStorage.removeItem("tokenUser");
       localStorage.removeItem("user");

@@ -19,6 +19,7 @@ export const EventPage = async (e, eventId, divMain) => {
 
 const printOneEvent = async (event, divMain, eventId) => {
   const token = localStorage.getItem("tokenUser");
+  const storedUser = JSON.parse(localStorage.getItem("user"));
 
   const divOneEvent = document.createElement("div");
   divOneEvent.classList.add("event-details");
@@ -62,7 +63,7 @@ const printOneEvent = async (event, divMain, eventId) => {
 
   const eventDescription = document.createElement("p");
   eventDescription.classList.add("event-description");
-  eventDescription.innerHTML  = event.description.replace(/\n/g, "<br>");
+  eventDescription.innerHTML = event.description.replace(/\n/g, "<br>");
 
   const eventTime = document.createElement("div");
   eventTime.classList.add("event-time");
@@ -116,19 +117,20 @@ const printOneEvent = async (event, divMain, eventId) => {
   const attendeesTitle = document.createElement("h1");
   attendeesTitle.textContent = "Asistiran";
 
+  const userAttending = event.attender.find(
+    (attender) => attender.user._id === storedUser._id
+  );
 
-
-  const storedUser = JSON.parse(localStorage.getItem("user"));
-  const attenderName = [];
   for (const attender of event.attender) {
+    const divAttender = document.createElement("div");
     const attendeesName = document.createElement("h2");
+    const imgProfile = document.createElement("img");
+    imgProfile.classList = "creator-image";
+    imgProfile.src = attender.user.profileimg;
     attendeesName.textContent = attender.name;
-    attenderName.push(attender.name);
-
-    attendeesDiv.append(attendeesName);
+    divAttender.append(imgProfile, attendeesName);
+    attendeesDiv.append(divAttender);
   }
-
-
 
   attendeesContainer.append(attendeesDiv);
   divLocation.append(locationLogo, eventLocation);
@@ -138,33 +140,43 @@ const printOneEvent = async (event, divMain, eventId) => {
   divContainerCreator.append(eventName, creatorEvent);
   creatorEvent.append(creatorImage, creatorName);
   leftSection.append(
-    eventImage,h1Description,
+    eventImage,
+    h1Description,
     eventDescription,
     attendeesContainer
   );
-  
+
   rightSection.append(eventTime, mapContainer, divButton);
   divSection.append(leftSection, rightSection);
   divOneEvent.append(divContainerCreator, divSection);
 
-  if (storedUser && !attenderName.includes(storedUser.userName)) {
+  if (userAttending) {
+    const cancelAttendButton = crearBoton("Cancelar Asistencia");
+    cancelAttendButton.classList.add("attend-button");
+    leftSection.append(cancelAttendButton);
 
-    const attendButton = crearBoton("Asistiré")
+    cancelAttendButton.addEventListener("click", (e) =>
+      removeAttender(e, eventId, divMain, token, userAttending)
+    );
+  } else {
+    const attendButton = crearBoton("Asistiré");
     attendButton.classList.add("attend-button");
     leftSection.append(attendButton);
 
     attendButton.addEventListener("click", (e) =>
-      addAttender(e, eventId, divMain,token)
+      addAttender(e, eventId, divMain, token)
     );
   }
-  
-  if(storedUser && storedUser._id === event.user._id || storedUser.rol === "admin"){
+
+  if (
+    (storedUser && storedUser._id === event.user._id) ||
+    storedUser.rol === "admin"
+  ) {
     console.log(storedUser.rol);
     const editEvent = crearBoton("Editar");
     const deleteBtn = crearBoton("Eliminar");
 
-    deleteBtn.addEventListener("click", (e) => deleteEvent(e,eventId,token));
-
+    deleteBtn.addEventListener("click", (e) => deleteEvent(e, eventId, token));
 
     divButton.append(editEvent, deleteBtn);
   }
@@ -172,18 +184,85 @@ const printOneEvent = async (event, divMain, eventId) => {
   divMain.append(divOneEvent);
 };
 
-const addAttender = async (e, eventId, divMain,token) => {
-  e.preventDefault()
-  const storedUser = JSON.parse(localStorage.getItem("user"));
+const addAttender = async (e, eventId, divMain, token) => {
+  e.preventDefault();
+  const scrollbarWidth =
+    window.innerWidth - document.documentElement.clientWidth;
+  document.body.style.overflow = "hidden";
+  document.body.style.paddingRight = `${scrollbarWidth}px`;
+  const containerForm = document.createElement("div");
+  containerForm.classList.add("form-container");
+  const form = document.createElement("form");
+  const formTitle = document.createElement("h1");
+  const closeForm = document.createElement("i");
+  const labelFirstName = document.createElement("label");
+  const inputfirstName = document.createElement("input");
+  const labelLastName = document.createElement("label");
+  const inputlastName = document.createElement("input");
+  const buttonInput = crearBoton("Asistiré");
+  inputfirstName.classList = "fisrtName-input";
+  inputfirstName.id = "fisrtName-input";
+  inputfirstName.setAttribute("required", "");
+  inputlastName.classList = "lastName-input";
+  inputlastName.id = "lastName-input";
+  inputlastName.setAttribute("required", "");
+  formTitle.classList = "form-title";
+  form.classList = "form-attender";
+  labelFirstName.textContent = "Nombre";
+  labelLastName.textContent = "Apellido";
+  labelFirstName.setAttribute("for", "fisrtName-input");
+  labelLastName.setAttribute("for", "lastName-input");
+  formTitle.textContent = "Completa tu Asistencia";
+  closeForm.classList = "fa-solid fa-circle-xmark";
+  closeForm.classList.add("close-form");
+  form.append(
+    closeForm,
+    formTitle,
+    labelFirstName,
+    inputfirstName,
+    labelLastName,
+    inputlastName,
+    buttonInput
+  );
+  containerForm.append(form);
+  divMain.append(containerForm);
+  setTimeout(() => {
+    document.body.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+    containerForm.classList.add("active");
+  }, 500);
 
+  closeForm.addEventListener("click", () => {
+    document.body.style.overflow = "";
+    document.body.style.backgroundColor = "";
+    document.body.style.paddingRight = "";
+    containerForm.classList.remove("active");
+    setTimeout(() => {
+      divMain.removeChild(containerForm);
+    }, 500);
+  });
+
+  form.addEventListener("submit", (e) =>
+    submitAttender(inputfirstName, inputlastName, e, divMain, eventId, token)
+  );
+};
+
+const submitAttender = async (
+  inputfirstName,
+  inputlastName,
+  e,
+  divMain,
+  eventId,
+  token
+) => {
+  e.preventDefault();
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const completeName = `${inputfirstName.value} ${inputlastName.value}`;
   const objetoFinal = JSON.stringify({
-    name: storedUser.userName,
+    name: completeName,
     email: storedUser.email,
     event: eventId,
     user: storedUser._id,
   });
-
-  
 
   const res = await fetch("https://proyecto10-six.vercel.app/api/attenders", {
     method: "POST",
@@ -195,21 +274,43 @@ const addAttender = async (e, eventId, divMain,token) => {
   });
 
   if (res.ok) {
+    document.body.style.overflow = "";
+    document.body.style.backgroundColor = "";
+    document.body.style.paddingRight = "";
     EventPage(null, eventId, divMain);
   }
 };
 
+const removeAttender = async (e, eventId, divMain, token, userAttending) => {
+  e.preventDefault();
+  const res = await fetch(
+    `https://proyecto10-six.vercel.app/api/attenders/${userAttending._id}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  if (res.ok) {
+    console.log("Asistente eliminado");
+  }
+  EventPage(null, eventId, divMain);
+};
 
-const deleteEvent = async (e,eventId,token) => {
-  e.preventDefault()
-  const res = await fetch(`https://proyecto10-six.vercel.app/api/events/${eventId}`, {
-    method: "DELETE",
-    headers: {
-      Authorization: `Bearer ${token}`
-    },
-  });
-  if(res.ok) {
+const deleteEvent = async (e, eventId, token) => {
+  e.preventDefault();
+  const res = await fetch(
+    `https://proyecto10-six.vercel.app/api/events/${eventId}`,
+    {
+      method: "DELETE",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    }
+  );
+  if (res.ok) {
     console.log("evento eliminado");
   }
   Home();
-}
+};

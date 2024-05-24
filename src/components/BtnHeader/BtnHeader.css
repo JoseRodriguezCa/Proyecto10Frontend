@@ -11,7 +11,6 @@
         display: flex;
         align-items: center;
         justify-content: center;
-        gap: 10px;
         margin-right: 10px;
         gap: 20px;
     }
@@ -107,3 +106,20 @@
     }
     
     }
+
+    .config-user {
+        cursor: pointer;
+        transition: all 0.5s;
+        -webkit-transition: all 0.5s;
+        -moz-transition: all 0.5s;
+        -ms-transition: all 0.5s;
+        -o-transition: all 0.5s;
+}
+
+    .config-user:hover {
+        transform: scale(1.1);
+        -webkit-transform: scale(1.1);
+        -moz-transform: scale(1.1);
+        -ms-transform: scale(1.1);
+        -o-transform: scale(1.1);
+}

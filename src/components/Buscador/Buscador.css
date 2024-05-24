@@ -13,8 +13,8 @@
     }
     
     .btnBuscar {
-        position: absolute;
-        right: 305px;
+        position: relative;
+        right: 120px;
     }
     
     .buscador {
@@ -46,7 +46,7 @@
     
     .divBuscador {
         display: flex;
-        width: 100%;
+        width: 60%;
         height: 50px;
         margin-right: 5px;
     }
