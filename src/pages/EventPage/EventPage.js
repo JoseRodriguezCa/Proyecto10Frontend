@@ -1,3 +1,4 @@
+import { EditEvent } from "../../EditEvent/EditEvent";
 import { crearBoton } from "../../components/BtnHeader/BtnHeader";
 import { Home } from "../Home/Home";
 import "./EventPage.css";
@@ -172,9 +173,20 @@ const printOneEvent = async (event, divMain, eventId) => {
     (storedUser && storedUser._id === event.user._id) ||
     storedUser.rol === "admin"
   ) {
-    console.log(storedUser.rol);
     const editEvent = crearBoton("Editar");
     const deleteBtn = crearBoton("Eliminar");
+
+    editEvent.addEventListener("click", (e) => {
+      const eventData = {
+        _id: eventId,
+        title: "Título del evento",
+        date: "2024-12-01",
+        time: "12:00",
+        location: "Ubicación del evento",
+        description: "Descripción del evento"
+      };
+      EditEvent(e, eventData);
+    });
 
     deleteBtn.addEventListener("click", (e) => deleteEvent(e, eventId, token));
 
@@ -186,8 +198,7 @@ const printOneEvent = async (event, divMain, eventId) => {
 
 const addAttender = async (e, eventId, divMain, token) => {
   e.preventDefault();
-  const scrollbarWidth =
-    window.innerWidth - document.documentElement.clientWidth;
+  const scrollbarWidth = window.innerWidth - document.documentElement.clientWidth;
   document.body.style.overflow = "hidden";
   document.body.style.paddingRight = `${scrollbarWidth}px`;
   const containerForm = document.createElement("div");

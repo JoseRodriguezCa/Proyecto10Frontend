@@ -1,9 +1,16 @@
 import { Home } from "../../pages/Home/Home";
 import "./CreateEvent.css";
 
-export const CreateEvent = (e) => {
+export const CreateEvent = (e, options = {}) => {
   e.preventDefault();
   const divMain = document.querySelector(".div-main");
+
+  const {
+    formTitle = "Crear Evento",
+    submitButtonText = "Crear Evento",
+    onSubmit = (e, form) => postEvent(e, form),
+    eventData = {},
+  } = options;
 
   if (!document.getElementById("event-modal")) {
     const modalNewEvent = document.createElement("div");
@@ -18,29 +25,34 @@ export const CreateEvent = (e) => {
     const titleInput = document.createElement("input");
     titleInput.type = "text";
     titleInput.name = "title";
+    titleInput.value = eventData.title || "";
 
     const dateLabel = document.createElement("label");
     dateLabel.textContent = "Fecha";
     const dateInput = document.createElement("input");
     dateInput.type = "date";
     dateInput.name = "date";
+    dateInput.value = eventData.date || "";
 
     const timeLabel = document.createElement("label");
     timeLabel.textContent = "Hora";
     const timeInput = document.createElement("input");
     timeInput.type = "time";
     timeInput.name = "time";
+    timeInput.value = eventData.time || "";
 
     const locationLabel = document.createElement("label");
     locationLabel.textContent = "Ubicación";
     const locationInput = document.createElement("input");
     locationInput.type = "text";
     locationInput.name = "location";
+    locationInput.value = eventData.location || "";
 
     const descriptionLabel = document.createElement("label");
     descriptionLabel.textContent = "Descripción";
     const descriptionInput = document.createElement("textarea");
     descriptionInput.name = "description";
+    descriptionInput.value = eventData.description || "";
 
     const fileLabel = document.createElement("label");
     fileLabel.textContent = "Subir imagen (archivo)";
@@ -50,18 +62,24 @@ export const CreateEvent = (e) => {
 
     const submitButton = document.createElement("button");
     submitButton.type = "submit";
-    submitButton.textContent = "Crear Evento";
+    submitButton.textContent = submitButtonText;
 
     const closeModal = document.createElement("i");
     closeModal.classList = 'fa-solid fa-circle-xmark';
     closeModal.classList.add("close-modal");
     closeModal.addEventListener("click", () => {
-      modalNewEvent.remove();
-    })
-    
+      modalNewEvent.classList.remove("active");
+      setTimeout(() => {
+        modalNewEvent.remove();
+      }, 300);
+    });
+
+    const formTitleElement = document.createElement("h2");
+    formTitleElement.textContent = formTitle;
 
     form.append(
       closeModal,
+      formTitleElement,
       titleLabel,
       titleInput,
       dateLabel,
@@ -81,15 +99,23 @@ export const CreateEvent = (e) => {
 
     divMain.append(modalNewEvent);
 
+    setTimeout(() => {
+      modalNewEvent.classList.add("active");
+    }, 300);
+
     window.addEventListener("click", (event) => {
       if (event.target === modalNewEvent) {
-        modalNewEvent.remove();
+        modalNewEvent.classList.remove("active");
+        setTimeout(() => {
+          modalNewEvent.remove();
+        }, 300);
       }
     });
 
-    form.addEventListener("submit", (e) => postEvent(e,form));
+    form.addEventListener("submit", (e) => onSubmit(e, form));
   }
 };
+
 
 const postEvent = async (e, form) => {
   e.preventDefault();

@@ -13,8 +13,12 @@
     }
     
     .btnBuscar {
-        position: relative;
-        right: 120px;
+        position: absolute;
+        right: 328px;
+    }
+
+    .btnContainerDrc span {
+        font-weight: 700;
     }
     
     .buscador {

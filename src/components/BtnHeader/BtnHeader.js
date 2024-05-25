@@ -22,6 +22,7 @@ export const containerBoton = () => {
   const btnContainerDrc = document.createElement("div");
   const btnDerecha1 = crearBoton("Iniciar Sesion");
   const btnDerecha2 = crearBoton("Registrarse");
+  
   btnDerecha1.addEventListener("click", (e) => LoginRegister(e, "login"));
   btnDerecha2.addEventListener("click", (e) => LoginRegister(e, "register"));
   btnIzquierda1.addEventListener("click", (e) => Home(e));
@@ -30,7 +31,9 @@ export const containerBoton = () => {
   btnContainerDrc.classList = "btnContainerDrc";
   if (localStorage.getItem("tokenUser")) {
     const btnDerecha3 = crearBoton("Cerrar Sesion");
+    const userName = document.createElement("span");
     const btnDerecha4 = document.createElement("img");
+    userName.textContent = storedUser.userName
     btnDerecha4.src = storedUser.profileimg;
     btnDerecha4.classList = "creator-image";
     btnDerecha4.classList.add("config-user");
@@ -40,7 +43,7 @@ export const containerBoton = () => {
       localStorage.removeItem("user");
       window.location.reload();
     });
-    btnContainerDrc.append(btnDerecha4, btnDerecha3);
+    btnContainerDrc.append(userName,btnDerecha4, btnDerecha3);
     btnContainerIzq.append(btnIzquierda2);
   } else {
     btnContainerDrc.append(btnDerecha1, btnDerecha2);

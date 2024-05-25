@@ -15,8 +15,8 @@ export const ConfigUser = (e) => {
     const form = document.createElement("form");
     form.classList.add("config-form");
 
-    const h1ChangeUser = document.createElement("h1")
-    h1ChangeUser.textContent = "Editar Perfil"
+    const h1ChangeUser = document.createElement("h1");
+    h1ChangeUser.textContent = "Editar Perfil";
 
     const userNameLabel = document.createElement("label");
     userNameLabel.textContent = "Nombre de Usuario";
@@ -50,7 +50,10 @@ export const ConfigUser = (e) => {
     closeModal.classList = "fa-solid fa-circle-xmark";
     closeModal.classList.add("close-modal");
     closeModal.addEventListener("click", () => {
-      modalconfigUser.remove();
+      modalconfigUser.classList.remove("active");
+      setTimeout(() => {
+        modalconfigUser.remove();
+      }, 300);
     });
 
     form.append(
@@ -71,14 +74,22 @@ export const ConfigUser = (e) => {
 
     divMain.append(modalconfigUser);
 
+    setTimeout(() => {
+      modalconfigUser.classList.add("active");
+    }, 300);
+
     window.addEventListener("click", (e) => {
       if (e.target === modalconfigUser) {
-        modalconfigUser.remove();
+        modalconfigUser.classList.remove("active");
+        setTimeout(() => {
+          modalconfigUser.remove();
+        }, 300);
+        
       }
     });
 
-    form.addEventListener("submit", (e,) =>
-      changeUser(e, userNameInput, passwordInput, emailInput, fileInput,form)
+    form.addEventListener("submit", (e) =>
+      changeUser(e, userNameInput, passwordInput, emailInput, fileInput, form)
     );
   }
 };
@@ -102,25 +113,31 @@ const changeUser = async (
 
   const token = localStorage.getItem("tokenUser");
 
-  const res = await fetch(`https://proyecto10-six.vercel.app/api/users/${storedUser._id}`, {
-    method: "PUT",
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    body: body,
-  });
+  const res = await fetch(
+    `https://proyecto10-six.vercel.app/api/users/${storedUser._id}`,
+    {
+      method: "PUT",
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+      body: body,
+    }
+  );
 
-  if (res.status === 400) {
-    const errorResponse = await res.json();
-    const pError = document.createElement("p");
-    pError.classList = "p-error";
-    pError.textContent = errorResponse.message;
-    form.append(pError);
-    return;
+  if (!document.querySelector(".p-error")) {
+    if (res.status === 400) {
+      const errorResponse = await res.json();
+      const pError = document.createElement("p");
+      pError.classList = "p-error";
+      pError.textContent = errorResponse.message;
+      form.append(pError);
+      return;
+    }
   }
-
-  const response = await res.json();
-  localStorage.setItem("user", JSON.stringify(response));
-  HeaderReload();
-  Home();
+  if (res.ok) {
+    const response = await res.json();
+    localStorage.setItem("user", JSON.stringify(response));
+    HeaderReload();
+    Home();
+  }
 };
