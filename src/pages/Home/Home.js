@@ -6,8 +6,7 @@ export const Home = async (e) => {
     e.preventDefault();
   }
   const divMain = document.querySelector(".div-main");
-  const page = 1; // Página actual
-  const limit = 10; // Límite de eventos por página
+  const page = 1;
   const res = await fetch(`https://proyecto10-six.vercel.app/api/events?page=${page}`);
   const events = await res.json();
   divMain.classList.add("hidden");
@@ -20,6 +19,7 @@ export const Home = async (e) => {
 };
 
 export const printEvents = (events, divMain) => {
+  divMain.style.height = "";
   const divEvents = document.createElement("div");
   divEvents.classList = "div-events";
   for (const event of events) {

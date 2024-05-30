@@ -1,5 +1,3 @@
-import { Home } from "../../pages/Home/Home";
-import { LoginRegister } from "../../pages/LoginRegister/LoginRegister";
 import { buscar } from "../Buscador/Buscador";
 import "./Main.css";
 

@@ -23,4 +23,6 @@ export const Footer = () => {
     footer.append(containerFooter);
     footer.classList.add("fixed-footer");
     app.append(footer);
+
+    return footer
 };

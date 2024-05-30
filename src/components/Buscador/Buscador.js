@@ -18,28 +18,32 @@ export const buscador = () => {
   return divBuscador;
 };
 
-export const buscar = (divMain) => {
+export const buscar = async (divMain) => {
   const buscador = document.querySelector(".buscador");
   const btnBuscar = document.querySelector(".btnBuscar");
   let valorBusqueda = "";
-  
 
   const realizarBusqueda = async () => {
     valorBusqueda = buscador.value;
-    divMain.innerHTML = "";
-    console.log("Búsqueda realizada:", valorBusqueda);
-    const event = await fetch(
-      `https://proyecto10-six.vercel.app/api/events/title/${valorBusqueda}`
-    );
+    divMain.classList.add("hidden");
+
+    const event = await fetch(`https://proyecto10-six.vercel.app/api/events/title/${valorBusqueda}`);
     const events = await event.json();
 
-    if(event.status === 404) {
+    if (event.status === 404) {
+      divMain.style.height = "63svh"
       divMain.innerHTML = `
-      <h1>No se encontro ningun evento con ese titulo</h1>`
+      <h1 class="h1-error" >No se encontró ningún evento con ese título</h1>`;
+      divMain.classList.remove("hidden");
+      return;
     }
 
+    setTimeout(() => {
+      divMain.innerHTML = "";
+      printEvents(events, divMain);
+      divMain.classList.remove("hidden");
+    }, 500);
 
-    printEvents(events, divMain);
   };
 
   buscador.addEventListener("keypress", (event) => {
@@ -49,13 +53,6 @@ export const buscar = (divMain) => {
     }
   });
 
-  btnBuscar.addEventListener("touchend", () => {
-    realizarBusqueda();
-  });
-
-  btnBuscar.addEventListener("click", () => {
-    realizarBusqueda();
-  });
-
-
+  btnBuscar.addEventListener("touchend", realizarBusqueda);
+  btnBuscar.addEventListener("click", realizarBusqueda);
 };

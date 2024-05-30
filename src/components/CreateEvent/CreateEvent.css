@@ -28,6 +28,7 @@
     flex-direction: column;
     gap: 10px;
     width: 25%; 
+    height: 99%;
 }
 
 .event-form label {

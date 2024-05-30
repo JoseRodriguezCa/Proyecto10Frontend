@@ -8,4 +8,6 @@ import './style.css'
 Header()
 Main()
 Home()
-Footer()
+setTimeout(() => {
+    Footer()
+}, 1000);

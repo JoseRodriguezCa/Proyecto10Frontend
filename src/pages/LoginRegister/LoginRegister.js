@@ -6,6 +6,7 @@ import "./LoginRegister.css";
 export const LoginRegister = (e, viewType) => {
   e.preventDefault();
   const divMain = document.querySelector(".div-main");
+
   const loginDiv = document.createElement("div");
   const form = document.createElement("form");
   divMain.classList.add("hidden");
@@ -22,6 +23,7 @@ export const LoginRegister = (e, viewType) => {
     }
     loginDiv.append(form);
     divMain.append(loginDiv);
+    divMain.style.height = "";
     divMain.classList.remove("hidden");
   }, 500);
 };
