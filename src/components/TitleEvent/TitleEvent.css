@@ -1,0 +1,30 @@
+.div-creator {
+    display: flex;
+    flex-direction: column;
+    border: 1px solid rgba(110, 83, 83, 0.315);
+    gap: 20px;
+    padding-bottom: 10px;
+    width: 98%;
+    align-items: center;
+  }
+  
+  .creator-event {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  
+  .creator-image {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
+  
+  .creator-name {
+    font-size: 18px;
+  }
+  
+  .event-name {
+    font-size: 35px;
+    margin-top: 20px;
+  }

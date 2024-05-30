@@ -124,6 +124,7 @@ const register = (form) => {
   const checkboxInput = document.createElement("input");
   const l = Logo();
   inputUserName.classList = "user-input";
+  inputUserName.setAttribute("maxlength", "20");
   inputPassword.classList = "password-input";
   buttonInput.classList = "button-input";
   inputPassword.type = "password";

@@ -16,6 +16,7 @@ export const crearBoton = (texto) => {
 
 export const containerBoton = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("tokenUser");
   const btnContainerIzq = document.createElement("div");
   const btnIzquierda1 = crearBoton("Inicio");
   const btnIzquierda2 = crearBoton("Crear Evento");
@@ -29,7 +30,7 @@ export const containerBoton = () => {
   btnIzquierda2.addEventListener("click", (e) => CreateEvent(e));
   btnContainerIzq.classList = "btnContainerIzq";
   btnContainerDrc.classList = "btnContainerDrc";
-  if (localStorage.getItem("tokenUser")) {
+  if (storedUser) {
     const btnDerecha3 = crearBoton("Cerrar Sesion");
     const userName = document.createElement("span");
     const btnDerecha4 = document.createElement("img");
@@ -37,7 +38,7 @@ export const containerBoton = () => {
     btnDerecha4.src = storedUser.profileimg;
     btnDerecha4.classList = "creator-image";
     btnDerecha4.classList.add("config-user");
-    btnDerecha4.addEventListener("click", (e) => ConfigUser(e));
+    btnDerecha4.addEventListener("click", (e) => ConfigUser(e,storedUser,token));
     btnDerecha3.addEventListener("click", () => {
       localStorage.removeItem("tokenUser");
       localStorage.removeItem("user");

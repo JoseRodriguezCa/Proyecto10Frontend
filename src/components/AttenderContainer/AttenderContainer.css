@@ -1,0 +1,40 @@
+.attendees-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+
+    margin-top: 20px;
+}
+
+.attendees-container h1 {
+    font-size: 24px;
+}
+
+.attendees-container h2 {
+    font-size: 18px;
+}
+
+
+.attend-button {
+    margin-top: 10px;
+}
+
+.attendees-div{
+    width: 100%;
+    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.attendees-div div {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-top: 5px;
+    gap: 5px;
+}
+
+.delete-attender {
+    cursor: pointer;
+}

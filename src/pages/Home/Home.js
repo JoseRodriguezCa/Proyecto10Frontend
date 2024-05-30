@@ -6,25 +6,27 @@ export const Home = async (e) => {
     e.preventDefault();
   }
   const divMain = document.querySelector(".div-main");
-  const res = await fetch("https://proyecto10-six.vercel.app/api/events");
+  const page = 1; // Página actual
+  const limit = 10; // Límite de eventos por página
+  const res = await fetch(`https://proyecto10-six.vercel.app/api/events?page=${page}`);
   const events = await res.json();
   divMain.classList.add("hidden");
 
   setTimeout(() => {
     divMain.innerHTML = "";
-    printEvents(events, divMain);
+    printEvents(events.events, divMain);
     divMain.classList.remove("hidden");
   }, 500);
 };
 
-const printEvents = (events, divMain) => {
+export const printEvents = (events, divMain) => {
   const divEvents = document.createElement("div");
   divEvents.classList = "div-events";
   for (const event of events) {
     console.log(event);
     const divEvent = document.createElement("div");
     divEvent.classList = "div-event";
-    divEvent.addEventListener("click", (e) => EventPage(e,event._id,divMain));
+    divEvent.addEventListener("click", (e) => EventPage(e, event._id, divMain));
     const title = document.createElement("h1");
     title.classList = "title";
     title.textContent = event.title;
@@ -39,14 +41,14 @@ const printEvents = (events, divMain) => {
 
     const description = document.createElement("p");
     description.classList.add("description");
-    
+
     const maxLength = 100;
     let truncatedDescription = event.description;
-    
+
     if (event.description.length > maxLength) {
       truncatedDescription = event.description.substring(0, maxLength) + "...";
     }
-    
+
     description.textContent = truncatedDescription;
 
     const posterContainer = document.createElement("div");

@@ -1,0 +1,25 @@
+.event-time {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.right-section {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.div-button-event {
+  display: flex;
+  gap: 30px;
+}
+
+.div-button-event a:last-child .btnHeader {
+  background-color: rgb(230, 0, 35);
+  color: white;
+}
+
+.div-button-event a:last-child .btnHeader:hover {
+  background-color: rgb(182, 0, 0);
+}
