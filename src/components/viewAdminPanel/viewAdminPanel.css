@@ -31,3 +31,16 @@
   top: 60px;
 }
 
+@media (max-width: 800px) {
+  .admin-panel-container {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px;
+    background-color: #a6ab9a;
+    border: 1px solid #ccc;
+    transition: opacity 0.3s ease-in-out;
+    height: 91%;
+    overflow: auto;
+}
+ }

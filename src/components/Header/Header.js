@@ -76,13 +76,11 @@ export const mobileHeader = () => {
   header.append(divContainer);
   document.body.append(header);
 
-  // Agregar event listeners a los enlaces para manejar la navegación
   const links = divContainer.querySelectorAll("a.tab");
   links.forEach(link => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
       if (link === searchTab) {
-        // No hacer nada si se hace clic en el botón de búsqueda
         return;
       }
       const path = link.getAttribute("href");
@@ -95,12 +93,9 @@ export const mobileHeader = () => {
     e.preventDefault();
     const buscador = document.querySelector(".searchDiv");
 
-    // Verificar si buscador está visible o no
     if (buscador.style.opacity === "1") {
-      // Si está visible, ocultarlo
       buscador.style.opacity = "0";
     } else {
-      // Si no está visible, mostrarlo
       buscador.style.opacity = "1";
     }
   });
