@@ -26,8 +26,15 @@ export const buscador = () => {
   }
 
   divBuscador.append(iBuscador, buscadorInput, btnBuscar);
+
+  // Enfocar el campo de búsqueda al hacer clic en el divBuscador
+  divBuscador.addEventListener("click", () => {
+    buscadorInput.focus();
+  });
+
   return divBuscador;
 };
+
 
 export const buscar = async (divMain) => {
   const buscador = document.querySelector(".buscador");
@@ -67,6 +74,7 @@ export const buscar = async (divMain) => {
     }
   };
 
+  // Manejo de eventos para dispositivos táctiles
   buscador.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
@@ -74,7 +82,15 @@ export const buscar = async (divMain) => {
     }
   });
 
-  btnBuscar.addEventListener("click", realizarBusqueda);
+  btnBuscar.addEventListener("click", (event) => {
+    event.preventDefault(); // Prevenir el comportamiento predeterminado del formulario
+    realizarBusqueda();
+  });
+
+  // Agregar evento touchstart para manejar el enfoque en dispositivos táctiles
+  divMain.addEventListener("touchstart", () => {
+    buscador.focus();
+  });
 };
 
 
