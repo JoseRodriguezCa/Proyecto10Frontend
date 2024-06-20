@@ -69,7 +69,6 @@ export const buscar = async (divMain) => {
     }
   });
 
-  btnBuscar.addEventListener("touchend", realizarBusqueda);
   btnBuscar.addEventListener("click", realizarBusqueda);
 };
 
