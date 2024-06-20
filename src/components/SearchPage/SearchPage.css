@@ -1,10 +1,10 @@
 .searchDiv {
     position: fixed;
     display: flex;
-    bottom: 9%; /* Inicialmente fuera de la pantalla */
+    top: 0; /* Inicialmente fuera de la pantalla */
     left: 0;
     width: 100%;
-    background-color: white;
+    background-color: transparent;
     border-top: 1px solid #ccc;
     transition: bottom 0.3s ease-in-out, opacity 0.3s ease-in-out;
     opacity: 0; /* Inicialmente invisible */
