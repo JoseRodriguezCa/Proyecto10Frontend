@@ -6,7 +6,7 @@ export const Main = () => {
   const screenWidth = window.innerWidth;
   const main = document.createElement("main");
   const divMain = document.createElement("div");
-  // buscar(divMain)
+  buscar(divMain)
   divMain.classList = "div-main";
   main.append(divMain);
   app.append(main);
