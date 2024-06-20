@@ -52,7 +52,7 @@ Footer();
 // Verificar la ruta inicial y navegar si es necesario
 const initialPath = window.location.pathname + window.location.search;
 if (initialPath === '/' || initialPath === '/index.html') {
-  navigateTo("/events");
+  navigateTo("/events?page=1");
 } else {
   router();
 }
