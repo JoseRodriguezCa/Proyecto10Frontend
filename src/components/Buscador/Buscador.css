@@ -116,7 +116,7 @@
   margin-right: -2rem;
 }
 
-.search__input:hover,
+/* .search__input:hover,
 .search__input:focus {
   box-shadow: 0 0 1em #00000013;
 }
@@ -133,7 +133,7 @@
 
 .search__input:focus + .search__button {
   background-color: #f0eeee;
-}
+} */
 
 .search__button {
   border: none;
