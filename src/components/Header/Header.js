@@ -90,7 +90,6 @@ export const mobileHeader = () => {
 
   const searchTab = document.getElementById("searchTab");
   searchTab.addEventListener("click", (e) => {
-    e.preventDefault();
     const buscador = document.querySelector(".searchDiv");
 
     if (buscador.style.opacity === "1") {

@@ -25,12 +25,6 @@ export const buscador = () => {
   }
 
   divBuscador.append(iBuscador, buscadorInput, btnBuscar);
-
-  // Agregar el enfoque al campo de entrada al hacer clic en él
-  buscadorInput.addEventListener('click', () => {
-    buscadorInput.focus();
-  });
-
   return divBuscador;
 };
 
@@ -39,41 +33,36 @@ export const buscar = async (divMain) => {
   const btnBuscar = document.querySelector(".btnBuscar");
   let valorBusqueda = "";
 
+
+
   const realizarBusqueda = async () => {
     valorBusqueda = buscador.value;
     divMain.classList.add("hidden");
 
-    if (valorBusqueda === "") {
+    if(valorBusqueda === "") {
+      return
+    }
+
+    const event = await fetch(`https://proyecto10-six.vercel.app/api/events/title/${valorBusqueda}`);
+    const events = await event.json();
+
+    if (event.status === 404) {
+      divMain.style.height = "63svh"
+      divMain.innerHTML = `
+      <h1 class="h1-error" >No se encontró ningún evento con ese título</h1>`;
+      divMain.classList.remove("hidden");
       return;
     }
 
-    try {
-      const response = await fetch(`https://proyecto10-six.vercel.app/api/events/title/${valorBusqueda}`);
-      if (!response.ok) {
-        throw new Error('Network response was not ok');
-      }
-      const events = await response.json();
-
-      if (events.length === 0) {
-        divMain.style.height = "63vh";
-        divMain.innerHTML = `<h1 class="h1-error">No se encontró ningún evento con ese título</h1>`;
-        divMain.classList.remove("hidden");
-        return;
-      }
-
-      setTimeout(() => {
-        divMain.innerHTML = "";
-        printEvents(events, null, divMain);
-        divMain.classList.remove("hidden");
-      }, 500);
-    } catch (error) {
-      console.error('Error fetching events:', error);
-      divMain.innerHTML = `<h1 class="h1-error">Error al buscar eventos</h1>`;
+    setTimeout(() => {
+      divMain.innerHTML = "";
+      printEvents(events,null, divMain);
       divMain.classList.remove("hidden");
-    }
+    }, 500);
+
   };
 
-  buscador.addEventListener("keydown", (event) => {
+  buscador.addEventListener("keypress", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
       realizarBusqueda();
@@ -82,7 +71,6 @@ export const buscar = async (divMain) => {
 
   btnBuscar.addEventListener("click", realizarBusqueda);
 };
-
 
 
 export const searchAdmin = (adminPanel, closePanel, usersContainer, users, events, token, paginationContainer) => {
