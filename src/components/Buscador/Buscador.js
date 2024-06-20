@@ -24,20 +24,9 @@ export const buscador = () => {
     divBuscador.classList.add("divBuscador");
   }
 
-  // Evitar enfoque automático al cargar la página
-  document.addEventListener('DOMContentLoaded', () => {
-    buscadorInput.blur(); // Desenfocar el campo de búsqueda al cargar la página
-  });
-
-  // Desactivar eventos táctiles adicionales en el campo de búsqueda
-  buscadorInput.addEventListener('touchstart', (event) => {
-    event.stopPropagation(); // Detener la propagación del evento táctil
-  });
-
   divBuscador.append(iBuscador, buscadorInput, btnBuscar);
   return divBuscador;
 };
-
 
 export const buscar = async (divMain) => {
   const buscador = document.querySelector(".buscador");
