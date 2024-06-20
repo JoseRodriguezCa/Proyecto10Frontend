@@ -3,7 +3,9 @@ import { createFormElements } from "../FormElementsUser/FormElementsUser";
 import "./ConfigUser.css";
 
 export const ConfigUser = (e, storedUser, token) => {
-  e.preventDefault();
+  if(e) {
+    e.preventDefault();
+  }
 
   const divMain = document.querySelector(".div-main");
 

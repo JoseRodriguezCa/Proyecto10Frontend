@@ -2,7 +2,9 @@ import { postEvent } from "../PostEvent/PostEvent";
 import "./CreateEvent.css";
 
 export const CreateEvent = (e, options = {}) => {
-  e.preventDefault();
+  if (e) {
+    e.preventDefault();
+  }
   const divMain = document.querySelector(".div-main");
 
   const {
@@ -11,6 +13,8 @@ export const CreateEvent = (e, options = {}) => {
     onSubmit = (e, form) => postEvent(e, form),
     eventData = {},
   } = options;
+
+  const isEditing = !!eventData._id;
 
   if (!document.getElementById("event-modal")) {
     const modalNewEvent = document.createElement("div");
@@ -25,6 +29,7 @@ export const CreateEvent = (e, options = {}) => {
     const titleInput = document.createElement("input");
     titleInput.type = "text";
     titleInput.name = "title";
+    titleInput.value = eventData.title || "";
 
     const dateLabel = document.createElement("label");
     dateLabel.textContent = "Fecha";
@@ -112,5 +117,13 @@ export const CreateEvent = (e, options = {}) => {
     });
 
     form.addEventListener("submit", (e) => onSubmit(e, form));
+
+    if (isEditing) {
+      titleInput.value = eventData.title || "";
+      dateInput.value = eventData.date || "";
+      timeInput.value = eventData.time || "";
+      locationInput.value = eventData.location || "";
+      descriptionInput.value = eventData.description || "";
+    }
   }
 };

@@ -1,10 +1,10 @@
 import { changeUser } from "../ChangeUser/ChangeUser";
 import { deleteUser } from "../DeleteUser/DeleteUser";
+import { isAdmin } from "../IsAdmin/IsAdmin";
 import "./FormElementsUser.css"
 
 export const createFormElements = (e, storedUser, token,modalconfigUser) => {
   const form = document.createElement("form");
-  console.log(modalconfigUser);
   form.classList.add("config-form");
   const h1ChangeUser = document.createElement("h1");
   h1ChangeUser.textContent = "Editar Perfil";
@@ -21,6 +21,9 @@ export const createFormElements = (e, storedUser, token,modalconfigUser) => {
   passwordInput.type = "password";
   passwordInput.name = "password";
 
+
+
+  
   const emailLabel = document.createElement("label");
   emailLabel.textContent = "Email";
   const emailInput = document.createElement("input");
@@ -51,18 +54,7 @@ export const createFormElements = (e, storedUser, token,modalconfigUser) => {
     }, 300);
   });
 
-  form.addEventListener("submit", (e) =>
-    changeUser(
-      e,
-      userNameInput,
-      passwordInput,
-      emailInput,
-      fileInput,
-      form,
-      storedUser,
-      token
-    )
-  );
+
 
   form.append(
     closeModal,
@@ -78,6 +70,46 @@ export const createFormElements = (e, storedUser, token,modalconfigUser) => {
     submitButton,
     removeUser
   );
+
+  let roleSelect;
+  const isAdminUser = isAdmin();
+
+
+if (isAdminUser) {
+  const roleLabel = document.createElement("label");
+  roleLabel.textContent = "Rol";
+
+  roleSelect = document.createElement("select");
+  roleSelect.name = "role";
+
+  const adminOption = document.createElement("option");
+  adminOption.value = "admin";
+  adminOption.textContent = "Admin";
+
+  const userOption = document.createElement("option");
+  userOption.value = "user";
+  userOption.textContent = "User";
+
+  roleSelect.appendChild(adminOption);
+  roleSelect.appendChild(userOption);
+
+  form.insertBefore(roleLabel, emailLabel);
+  form.insertBefore(roleSelect, emailLabel);
+}
+
+form.addEventListener("submit", (e) =>
+  changeUser(
+    e,
+    userNameInput,
+    passwordInput,
+    emailInput,
+    fileInput,
+    form,
+    storedUser,
+    token,
+    roleSelect
+  )
+);
 
   return form;
 };

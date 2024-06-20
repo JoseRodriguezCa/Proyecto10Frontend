@@ -1,4 +1,5 @@
 import { Home } from "../../pages/Home/Home";
+import { navigateTo } from "../../router/routes";
 import "./DeleteEvent.css"
 
 export const DeleteEvent = async (e, eventId, token) => {
@@ -15,5 +16,5 @@ export const DeleteEvent = async (e, eventId, token) => {
     if (res.ok) {
       console.log("evento eliminado");
     }
-    Home();
+    navigateTo("/events?page=1")
   };

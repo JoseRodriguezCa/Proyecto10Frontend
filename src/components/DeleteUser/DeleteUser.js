@@ -1,3 +1,4 @@
+import { isAdmin } from "../IsAdmin/IsAdmin";
 
 
 export const deleteUser = async (e, storedUser, token) => {
@@ -14,8 +15,10 @@ export const deleteUser = async (e, storedUser, token) => {
     if (res.ok) {
       const response = await res.json();
       alert("Cuenta Eliminada");
-      localStorage.removeItem("tokenUser");
-      localStorage.removeItem("user");
+      if(!isAdmin()){
+        localStorage.removeItem("tokenUser");
+        localStorage.removeItem("user");
+      }
       window.location.reload();
     }
   };

@@ -14,7 +14,8 @@
 }
 
 .config-form input,
-.config-form textarea {
+.config-form textarea,
+.config-form select {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;

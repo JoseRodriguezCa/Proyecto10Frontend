@@ -15,11 +15,11 @@
   gap: 30px;
 }
 
-.div-button-event a:last-child .btnHeader {
+.div-button-event .btnHeader:last-of-type {
   background-color: rgb(230, 0, 35);
   color: white;
 }
 
-.div-button-event a:last-child .btnHeader:hover {
+.div-button-event .btnHeader:last-of-type:hover {
   background-color: rgb(182, 0, 0);
 }

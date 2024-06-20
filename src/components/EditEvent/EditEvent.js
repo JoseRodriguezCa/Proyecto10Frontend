@@ -1,11 +1,8 @@
-import { CreateEvent } from "../CreateEvent/CreateEvent";
-import "./EditEvent.css";
 
-export const EditEvent = (e, eventData) => {
-  e.preventDefault();
+export const EditEvent = async (event) => {
   const token = localStorage.getItem("tokenUser");
 
-  const eventDate = new Date(eventData.date);
+  const eventDate = new Date(event.date);
   const localTime = new Date(eventDate.getTime() - eventDate.getTimezoneOffset() * 60000)
     .toISOString()
     .slice(11, 16);
@@ -20,7 +17,7 @@ export const EditEvent = (e, eventData) => {
     formData.set('date', combinedDateTime);
 
     const response = await fetch(
-      `https://proyecto10-six.vercel.app/api/events/${eventData._id}`,
+      `https://proyecto10-six.vercel.app/api/events/${event._id}`,
       {
         method: "PUT",
         headers: {
@@ -37,22 +34,12 @@ export const EditEvent = (e, eventData) => {
       setTimeout(() => {
         modalNewEvent.remove();
       }, 300);
+      window.location.reload()
     } else {
       const errorResponse = await response.json();
       console.error("Error al actualizar el evento:", errorResponse);
     }
   };
 
-  CreateEvent(e, {
-    formTitle: "Editar Evento",
-    submitButtonText: "Editar Evento",
-    onSubmit: onSubmit,
-    eventData: {
-      title: eventData.title,
-      date: eventData.date.split("T")[0],
-      time: localTime,
-      location: eventData.location,
-      description: eventData.description,
-    },
-  });
+  return { onSubmit, localTime };
 };

@@ -1,10 +1,14 @@
+import { Footer } from "../../components/Footer/Footer";
 import { HeaderReload } from "../../components/Header/Header";
 import { Logo } from "../../components/Logo/Logo";
+import { navigateTo } from "../../router/routes";
 import { Home } from "../Home/Home";
 import "./LoginRegister.css";
 
 export const LoginRegister = (e, viewType) => {
-  e.preventDefault();
+  if(e) {
+    e.preventDefault();
+  }
   const divMain = document.querySelector(".div-main");
 
   const loginDiv = document.createElement("div");
@@ -104,10 +108,14 @@ const submit = async (inputUserName, inputPassword, e, form, checkboxInput) => {
   }
 
   const respuestaFinal = await res.json();
+
+  const { rol, ...userWithoutRole } = respuestaFinal.user;
+
   localStorage.setItem("tokenUser", respuestaFinal.token);
-  localStorage.setItem("user", JSON.stringify(respuestaFinal.user));
-  Home();
-  HeaderReload();
+  localStorage.setItem("user", JSON.stringify(userWithoutRole));
+  navigateTo("/");
+  HeaderReload()
+  
 };
 
 const register = (form) => {

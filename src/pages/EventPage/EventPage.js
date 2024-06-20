@@ -3,11 +3,14 @@ import { LeftSection } from "../../components/LeftSection/LeftSection";
 import { RightSection } from "../../components/RightSection/RightSection";
 import { TitleEvent } from "../../components/TitleEvent/TitleEvent";
 
-export const EventPage = async (e, eventId, divMain) => {
-  const res = await fetch(
-    `https://proyecto10-six.vercel.app/api/events/${eventId}`
-  );
-  const event = await res.json();
+export const EventPage = async (e, eventId) => {
+  
+  if (e) {
+    e.preventDefault();
+  }
+  const divMain = document.querySelector(".div-main");
+  const response = await fetch(`https://proyecto10-six.vercel.app/api/events/${eventId}`);
+  const event = await response.json();
 
   divMain.classList.add("hidden");
 
