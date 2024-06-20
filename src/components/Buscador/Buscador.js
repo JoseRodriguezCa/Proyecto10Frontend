@@ -10,6 +10,7 @@ export const buscador = () => {
   const buscadorInput = document.createElement("input");
   const iBuscador = document.createElement("i");
   const btnBuscar = crearBoton("Buscar");
+
   btnBuscar.removeAttribute("href");
   btnBuscar.classList = "btnBuscar";
   iBuscador.classList = "fa-solid fa-magnifying-glass";
@@ -31,38 +32,42 @@ export const buscador = () => {
 export const buscar = async (divMain) => {
   const buscador = document.querySelector(".buscador");
   const btnBuscar = document.querySelector(".btnBuscar");
-  let valorBusqueda = "";
-
-
 
   const realizarBusqueda = async () => {
-    valorBusqueda = buscador.value;
+    const valorBusqueda = buscador.value.trim();
     divMain.classList.add("hidden");
 
-    if(valorBusqueda === "") {
-      return
-    }
-
-    const event = await fetch(`https://proyecto10-six.vercel.app/api/events/title/${valorBusqueda}`);
-    const events = await event.json();
-
-    if (event.status === 404) {
-      divMain.style.height = "63svh"
-      divMain.innerHTML = `
-      <h1 class="h1-error" >No se encontró ningún evento con ese título</h1>`;
-      divMain.classList.remove("hidden");
+    if (valorBusqueda === "") {
       return;
     }
 
-    setTimeout(() => {
-      divMain.innerHTML = "";
-      printEvents(events,null, divMain);
-      divMain.classList.remove("hidden");
-    }, 500);
+    try {
+      const response = await fetch(`https://proyecto10-six.vercel.app/api/events/title/${valorBusqueda}`);
+      if (!response.ok) {
+        throw new Error('Network response was not ok');
+      }
+      const events = await response.json();
 
+      if (events.length === 0) {
+        divMain.style.height = "63vh";
+        divMain.innerHTML = `<h1 class="h1-error">No se encontró ningún evento con ese título</h1>`;
+        divMain.classList.remove("hidden");
+        return;
+      }
+
+      setTimeout(() => {
+        divMain.innerHTML = "";
+        printEvents(events, null, divMain);
+        divMain.classList.remove("hidden");
+      }, 500);
+    } catch (error) {
+      console.error('Error fetching events:', error);
+      divMain.innerHTML = `<h1 class="h1-error">Error al buscar eventos</h1>`;
+      divMain.classList.remove("hidden");
+    }
   };
 
-  buscador.addEventListener("keypress", (event) => {
+  buscador.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
       realizarBusqueda();
@@ -71,6 +76,7 @@ export const buscar = async (divMain) => {
 
   btnBuscar.addEventListener("click", realizarBusqueda);
 };
+
 
 
 export const searchAdmin = (adminPanel, closePanel, usersContainer, users, events, token, paginationContainer) => {
