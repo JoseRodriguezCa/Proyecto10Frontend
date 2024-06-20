@@ -25,6 +25,8 @@ header {
   .divContainer {
     padding-left: 0px;
     position: fixed;
+    display: flex;
+    flex-direction: column;
     bottom: 0;
     top: auto;
     width: 100%;

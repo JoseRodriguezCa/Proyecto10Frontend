@@ -8,7 +8,6 @@
     transition: bottom 0.3s ease-in-out, opacity 0.3s ease-in-out;
     opacity: 1; /* Inicialmente invisible */
     z-index: 1;
-    width: 100%;
     height: 50px;
     align-items: center;
   }
