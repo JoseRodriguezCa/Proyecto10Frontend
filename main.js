@@ -28,18 +28,23 @@ function checkScreenWidth() {
       footer.insertAdjacentElement('afterend', newHeader);
     }
   } else {
-    Header(); // Usar header común si el ancho es mayor a 650px
+    Header();
     const main = document.querySelector('main');
     const newHeader = document.querySelector('header');
     if (main && newHeader) {
       main.insertAdjacentElement('beforebegin', newHeader);
     }
   }
+
+  if (screenWidth <= 800) {
+    const divMain = document.querySelector('.divMain');
+    buscar(divMain)
+   }
+
 }
 checkScreenWidth();
 
-const divMain = document.querySelector('.divMain');
-buscar(divMain)
+
 
 Main();
 Footer();
