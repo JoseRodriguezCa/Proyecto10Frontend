@@ -74,8 +74,6 @@ export const mobileHeader = () => {
   `;
 
   divContainer.classList = "divContainer";
-  const b = BuscadorMobile();
-  divContainer.append(b)
   header.append(divContainer);
   document.body.prepend(header);
 

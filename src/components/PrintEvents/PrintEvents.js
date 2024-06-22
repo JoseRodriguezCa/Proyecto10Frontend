@@ -1,5 +1,6 @@
 import { EventPage } from "../../pages/EventPage/EventPage";
 import { navigateTo } from "../../router/routes";
+import { BuscadorMobile } from "../BuscadorMobile/BuscadorMobile";
 import "./PrintEvents.css";
 
 export const printEvents = (events, undenifed, divMain) => {
@@ -22,6 +23,7 @@ export const printEvents = (events, undenifed, divMain) => {
         navigateTo(`/event/${event._id}`);
       });
 
+      const b = BuscadorMobile();
       const title = document.createElement("h1");
       title.classList.add("title");
       title.textContent = event.title;
@@ -79,7 +81,7 @@ export const printEvents = (events, undenifed, divMain) => {
         location,
         description
       );
-      divEvents.append(divEvent);
+      divEvents.append(divEvent,b);
     }
 
     divEvents.classList.remove("hidden");
