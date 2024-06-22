@@ -113,7 +113,7 @@ const submit = async (inputUserName, inputPassword, e, form, checkboxInput) => {
 
   localStorage.setItem("tokenUser", respuestaFinal.token);
   localStorage.setItem("user", JSON.stringify(userWithoutRole));
-  navigateTo("/");
+  navigateTo("/events");
   HeaderReload()
   
 };
