@@ -23,7 +23,6 @@ export const printEvents = (events, undenifed, divMain) => {
         navigateTo(`/event/${event._id}`);
       });
 
-      const b = BuscadorMobile();
       const title = document.createElement("h1");
       title.classList.add("title");
       title.textContent = event.title;
@@ -81,6 +80,7 @@ export const printEvents = (events, undenifed, divMain) => {
         location,
         description
       );
+      const b = BuscadorMobile();
       divEvents.append(divEvent,b);
     }
 
