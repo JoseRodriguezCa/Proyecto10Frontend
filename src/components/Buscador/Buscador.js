@@ -63,7 +63,7 @@ export const buscar = async (divMain) => {
     }, 500);
   };
 
-  buscador.addEventListener("keypress", (event) => {
+  buscador.addEventListener("keydown", (event) => {
     if (event.key === "Enter") {
       event.preventDefault();
       realizarBusqueda();
