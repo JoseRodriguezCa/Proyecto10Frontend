@@ -74,8 +74,7 @@ export const mobileHeader = () => {
   `;
 
   divContainer.classList = "divContainer";
-  const b = buscador();
-  header.append(divContainer,b);
+  header.append(divContainer);
   document.body.append(header);
 
   const links = divContainer.querySelectorAll("a.tab");
