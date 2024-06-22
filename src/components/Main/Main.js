@@ -1,4 +1,5 @@
 import { buscar } from "../Buscador/Buscador";
+import { BuscadorMobile } from "../BuscadorMobile/BuscadorMobile";
 import "./Main.css";
 
 const app = document.querySelector("#app");

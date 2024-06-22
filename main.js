@@ -1,4 +1,5 @@
 import { buscar } from "./src/components/Buscador/Buscador";
+import { BuscadorMobile } from "./src/components/BuscadorMobile/BuscadorMobile";
 import { Footer } from "./src/components/Footer/Footer";
 import { Header, mobileHeader } from "./src/components/Header/Header";
 import { Main } from "./src/components/Main/Main";
@@ -31,7 +32,7 @@ function checkScreenWidth() {
   }
 
   if (screenWidth <= 800) {
-    const divMain = document.querySelector('.divMain');
+    const divMain = document.querySelector('.div-main');
     buscar(divMain)
    }
 
@@ -39,6 +40,7 @@ function checkScreenWidth() {
 checkScreenWidth();
 
 Main();
+BuscadorMobile()
 Footer();
 
 const initialPath = window.location.pathname + window.location.search;

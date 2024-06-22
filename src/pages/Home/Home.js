@@ -30,4 +30,3 @@ export const Home = async (e, page = 1) => {
     divMain.appendChild(paginationContainer);
   }, 500);
 };
-
