@@ -7,7 +7,7 @@ import "./Header.css";
 const divContainer = document.createElement("div");
 export const HeaderReload = () => {
   divContainer.innerHTML = "";
-  const b = buscador("Buscar Eventos");
+  const b = buscador();
   const l = Logo();
   const { btnContainerIzq, btnContainerDrc } = containerBoton();
   divContainer.append(l, btnContainerIzq, b, btnContainerDrc);
@@ -73,6 +73,8 @@ export const mobileHeader = () => {
   `;
 
   divContainer.classList = "divContainer";
+  const b = buscador();
+  divContainer.append(b)
   header.append(divContainer);
   document.body.append(header);
 
@@ -90,7 +92,7 @@ export const mobileHeader = () => {
 
   const searchTab = document.getElementById("searchTab");
   searchTab.addEventListener("click", (e) => {
-    const buscador = document.querySelector(".searchDiv");
+    const buscador = b;
 
     if (buscador.style.opacity === "1") {
       buscador.style.opacity = "0";

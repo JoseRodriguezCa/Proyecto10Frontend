@@ -4,6 +4,5 @@ import { buscador } from "../Buscador/Buscador";
 export const SearchPage = (e) => {
   const divContainer = document.querySelector(".divContainer");
   const searchDiv = buscador();
-  searchDiv.classList.add('searchDiv');
   divContainer.appendChild(searchDiv);
 };

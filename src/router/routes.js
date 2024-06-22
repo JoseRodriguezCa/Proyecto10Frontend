@@ -1,8 +1,6 @@
 import { AddAttender } from "../components/AddAttender/AddAttender";
 import { ConfigUser } from "../components/ConfigUser/ConfigUser";
 import { CreateEvent } from "../components/CreateEvent/CreateEvent";
-import { RemoveAttender } from "../components/RemoveAttender/RemoveAttender";
-import { SearchPage } from "../components/SearchPage/SearchPage";
 import { viewAdminPanel } from "../components/viewAdminPanel/viewAdminPanel";
 import { EventPage } from "../pages/EventPage/EventPage";
 import { Home } from "../pages/Home/Home";
