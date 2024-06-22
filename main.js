@@ -2,7 +2,6 @@ import { buscar } from "./src/components/Buscador/Buscador";
 import { Footer } from "./src/components/Footer/Footer";
 import { Header, mobileHeader } from "./src/components/Header/Header";
 import { Main } from "./src/components/Main/Main";
-import { SearchPage } from "./src/components/SearchPage/SearchPage";
 import { router, navigateTo } from "./src/router/routes";
 import "./style.css";
 
@@ -38,8 +37,6 @@ function checkScreenWidth() {
 
 }
 checkScreenWidth();
-
-
 
 Main();
 Footer();

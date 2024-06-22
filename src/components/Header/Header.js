@@ -82,9 +82,9 @@ export const mobileHeader = () => {
   links.forEach(link => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
-      if (link === searchTab) {
-        return;
-      }
+      // if (link === searchTab) {
+      //   return;
+      // }
       const path = link.getAttribute("href");
       navigateTo(path);
     });
@@ -94,11 +94,11 @@ export const mobileHeader = () => {
   searchTab.addEventListener("click", (e) => {
     const buscador = b;
 
-    if (buscador.style.opacity === "1") {
-      buscador.style.opacity = "0";
-    } else {
-      buscador.style.opacity = "1";
-    }
+    // if (buscador.style.opacity === "1") {
+    //   buscador.style.opacity = "0";
+    // } else {
+    //   buscador.style.opacity = "1";
+    // }
   });
 };
 
