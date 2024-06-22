@@ -10,9 +10,9 @@ export const buscador = () => {
   const divBuscador = document.createElement("div");
   const buscadorInput = document.createElement("input");
   const pruebaInput = document.createElement("input");
-  const iBuscador = document.createElement("i");
+  // const iBuscador = document.createElement("i");
 
-  iBuscador.classList = "fa-solid fa-magnifying-glass";
+  // iBuscador.classList = "fa-solid fa-magnifying-glass";
   buscadorInput.type = "text";
   pruebaInput.type = "text"
   buscadorInput.placeholder = "Buscar Eventos";
@@ -28,7 +28,7 @@ export const buscador = () => {
     divBuscador.append(btnBuscar)
   }
 
-  divBuscador.append(iBuscador, pruebaInput);
+  divBuscador.append( pruebaInput);
   return divBuscador;
 };
 
