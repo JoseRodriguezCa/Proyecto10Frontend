@@ -1,6 +1,6 @@
 import { EventPage } from "../../pages/EventPage/EventPage";
 import { navigateTo } from "../../router/routes";
-import { BuscadorMobile } from "../BuscadorMobile/BuscadorMobile";
+import { buscador } from "../Buscador/Buscador";
 import "./PrintEvents.css";
 
 export const printEvents = (events, undenifed, divMain) => {
@@ -80,7 +80,7 @@ export const printEvents = (events, undenifed, divMain) => {
         location,
         description
       );
-      const b = BuscadorMobile();
+      const b = buscador();
       divEvents.append(divEvent,b);
     }
 
