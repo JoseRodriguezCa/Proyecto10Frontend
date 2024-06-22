@@ -51,11 +51,3 @@
   }
 
 
-  .close-panel {
-    position: relative;
-    font-size: 25px;
-    cursor: pointer;
-    float: right;
-    right: 5px;
-    top: 15px;
-  }
