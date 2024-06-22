@@ -41,11 +41,11 @@ checkScreenWidth();
 Main();
 Footer();
 
-const initialPath = window.location.pathname + window.location.search;
-if (initialPath === '/' || initialPath === '/index.html') {
-  navigateTo("/events?page=1");
-} else {
-  router();
-}
+// const initialPath = window.location.pathname + window.location.search;
+// if (initialPath === '/' || initialPath === '/index.html') {
+//   navigateTo("/events?page=1");
+// } else {
+//   router();
+// }
 
 window.addEventListener('resize', checkScreenWidth);

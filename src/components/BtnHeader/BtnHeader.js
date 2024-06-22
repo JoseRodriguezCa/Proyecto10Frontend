@@ -21,7 +21,7 @@ export const containerBoton = () => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("tokenUser");
   const btnContainerIzq = document.createElement("div");
-  const btnIzquierda1 = crearBoton("Inicio", "/events?page=1");
+  const btnIzquierda1 = crearBoton("Inicio", "/");
   const btnIzquierda2 = crearBoton("Crear Evento", "/create-event");
   const btnContainerDrc = document.createElement("div");
   const btnDerecha1 = crearBoton("Iniciar Sesion", "/login");
