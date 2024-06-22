@@ -43,7 +43,7 @@ Footer();
 
 const initialPath = window.location.pathname + window.location.search;
 if (initialPath === '/' || initialPath === '/index.html') {
-  navigateTo("/events?page=1");
+  navigateTo("/events");
 } else {
   router();
 }
