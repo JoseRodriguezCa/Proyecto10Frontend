@@ -9,13 +9,12 @@ import "./style.css";
 function checkScreenWidth() {
   const screenWidth = window.innerWidth;
 
-  if (screenWidth <= 800) {
-    mobileHeader();
-  } else {
+  if (screenWidth >= 800) {
     Header();
   }
 
   if (screenWidth <= 800) {
+    mobileHeader();
     const divMain = document.querySelector('.div-main');
     buscar(divMain)
    }
