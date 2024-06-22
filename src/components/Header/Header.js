@@ -1,29 +1,47 @@
+// Importar las funciones y estilos necesarios
 import { navigateTo } from "../../router/routes";
 import { containerBoton } from "../BtnHeader/BtnHeader";
 import { buscador } from "../Buscador/Buscador";
-import { BuscadorMobile } from "../BuscadorMobile/BuscadorMobile";
 import { Logo } from "../Logo/Logo";
 import "./Header.css";
 
+// Crear el contenedor principal una sola vez
 const divContainer = document.createElement("div");
+
+// Función para recargar el contenido del header
 export const HeaderReload = () => {
   divContainer.innerHTML = "";
-  const b = buscador();
+  
   const l = Logo();
   const { btnContainerIzq, btnContainerDrc } = containerBoton();
-  divContainer.append(l, btnContainerIzq, b, btnContainerDrc);
+  divContainer.append(l, btnContainerIzq, btnContainerDrc);
 };
 
+// Función para inicializar el header estándar
 export const Header = () => {
+  // Verificar si ya existe el header para evitar duplicaciones
+  if (document.querySelector(".header")) {
+    return;
+  }
+
   const header = document.createElement("header");
   divContainer.innerHTML = "";
   divContainer.classList = "divContainer";
   HeaderReload();
+  const b = buscador();
+  divContainer.insertBefore(b, divContainer.querySelector(".btnContainerDrc"));
   header.append(divContainer);
+  header.classList.add("header"); // Agregar clase header
   document.body.prepend(header);
 };
 
+// Función para inicializar el header móvil
 export const mobileHeader = () => {
+  // Verificar si ya existe el header móvil para evitar duplicaciones
+  if (document.querySelector(".mobile-header")) {
+    return;
+  }
+
   const header = document.createElement("header");
   divContainer.innerHTML = "";
   divContainer.innerHTML = `
@@ -39,7 +57,7 @@ export const mobileHeader = () => {
           <path d="M12 5v14m-7 -7h14" />
         </svg>
       </a>
-      <button  class="tab search" id="searchTab">
+      <button class="tab search" id="searchTab">
         <svg width="101" height="114" viewBox="0 0 101 114" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="46.1726" cy="46.1727" r="29.5497" transform="rotate(36.0692 46.1726 46.1727)" stroke="black" stroke-width="7"></circle>
           <line x1="61.7089" y1="67.7837" x2="97.7088" y2="111.784" stroke="black" stroke-width="7"></line>
@@ -73,29 +91,30 @@ export const mobileHeader = () => {
     </div>
   `;
 
-  divContainer.classList = "divContainer";
-  const b = buscador();
-  header.append(divContainer,b);
+  divContainer.classList = "divContainer mobile"; // Agregar clase para diferenciar el header móvil
+  const b = buscador(); // Instanciar el buscador aquí
+  header.append(divContainer, b);
+  header.classList.add("mobile-header"); // Agregar clase para el header móvil
   document.body.append(header);
 
+  // Manejar eventos de los enlaces para navegación
   const links = divContainer.querySelectorAll("a.tab");
   links.forEach(link => {
     link.addEventListener("click", (e) => {
       e.preventDefault();
       const path = link.getAttribute("href");
-      navigateTo(path);
+      navigateTo(path); // Asegurar que navigateTo esté definido correctamente
     });
   });
 
+  // Toggle para la visibilidad del buscador
   const searchTab = document.getElementById("searchTab");
   searchTab.addEventListener("click", (e) => {
-    const buscador = b;
-
-    if (buscador.style.opacity === "1") {
-      buscador.style.opacity = "0";
+    e.preventDefault();
+    if (b.style.opacity === "1") {
+      b.style.opacity = "0";
     } else {
-      buscador.style.opacity = "1";
+      b.style.opacity = "1";
     }
   });
 };
-
