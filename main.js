@@ -1,5 +1,4 @@
 import { buscar } from "./src/components/Buscador/Buscador";
-import { BuscadorMobile } from "./src/components/BuscadorMobile/BuscadorMobile";
 import { Footer } from "./src/components/Footer/Footer";
 import { Header, mobileHeader } from "./src/components/Header/Header";
 import { Main } from "./src/components/Main/Main";
@@ -40,7 +39,6 @@ function checkScreenWidth() {
 checkScreenWidth();
 
 Main();
-BuscadorMobile()
 Footer();
 
 const initialPath = window.location.pathname + window.location.search;
