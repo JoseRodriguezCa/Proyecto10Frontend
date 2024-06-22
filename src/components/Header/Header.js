@@ -38,12 +38,12 @@ export const mobileHeader = () => {
           <path d="M12 5v14m-7 -7h14" />
         </svg>
       </a>
-      <a href="#" class="tab search" id="searchTab">
+      <button  class="tab search" id="searchTab">
         <svg width="101" height="114" viewBox="0 0 101 114" fill="none" xmlns="http://www.w3.org/2000/svg">
           <circle cx="46.1726" cy="46.1727" r="29.5497" transform="rotate(36.0692 46.1726 46.1727)" stroke="black" stroke-width="7"></circle>
           <line x1="61.7089" y1="67.7837" x2="97.7088" y2="111.784" stroke="black" stroke-width="7"></line>
         </svg>
-      </a>
+      </button>
       <a href="/config-user" class="tab profile">
         <svg width="104" height="100" viewBox="0 0 104 100" fill="none" xmlns="http://www.w3.org/2000/svg">
           <rect x="21.5" y="3.5" width="60" height="60" rx="30" stroke="black" stroke-width="7"></rect>
