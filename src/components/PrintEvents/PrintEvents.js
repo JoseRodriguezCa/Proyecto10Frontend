@@ -1,4 +1,3 @@
-import { EventPage } from "../../pages/EventPage/EventPage";
 import { navigateTo } from "../../router/routes";
 import { buscador } from "../Buscador/Buscador";
 import "./PrintEvents.css";
@@ -80,8 +79,7 @@ export const printEvents = (events, undenifed, divMain) => {
         location,
         description
       );
-      const b = buscador();
-      divEvents.append(divEvent,b);
+      divEvents.append(divEvent);
     }
 
     divEvents.classList.remove("hidden");
