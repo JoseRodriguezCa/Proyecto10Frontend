@@ -16,7 +16,7 @@ function checkScreenWidth() {
   if (screenWidth <= 800) {
     mobileHeader();
     const divMain = document.querySelector('.div-main');
-    buscar(divMain)
+    // buscar(divMain)
    }
 
 }
