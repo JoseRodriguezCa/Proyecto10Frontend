@@ -7,7 +7,7 @@ import { Home } from "../pages/Home/Home";
 import { LoginRegister } from "../pages/LoginRegister/LoginRegister";
 
 export const routes = {
-  "/": (e, page = 1) => Home(e, page),
+  "/events": (e, page = 1) => Home(e, page),
   "/login": (e) => LoginRegister(e, "login"),
   "/register": (e) => LoginRegister(e, "register"),
   "/create-event": (e) => CreateEvent(e),
