@@ -1,4 +1,4 @@
-import { buscar } from "./src/components/Buscador/Buscador";
+import { buscador, buscar } from "./src/components/Buscador/Buscador";
 import { Footer } from "./src/components/Footer/Footer";
 import { Header, mobileHeader } from "./src/components/Header/Header";
 import { Main } from "./src/components/Main/Main";
@@ -9,25 +9,10 @@ import "./style.css";
 function checkScreenWidth() {
   const screenWidth = window.innerWidth;
 
-  const existingHeader = document.querySelector('header');
-  if (existingHeader) {
-    existingHeader.remove();
-  }
-
   if (screenWidth <= 800) {
     mobileHeader();
-    const footer = document.querySelector('footer');
-    const newHeader = document.querySelector('header');
-    if (footer && newHeader) {
-      footer.insertAdjacentElement('afterend', newHeader);
-    }
   } else {
     Header();
-    const main = document.querySelector('main');
-    const newHeader = document.querySelector('header');
-    if (main && newHeader) {
-      main.insertAdjacentElement('beforebegin', newHeader);
-    }
   }
 
   if (screenWidth <= 800) {
