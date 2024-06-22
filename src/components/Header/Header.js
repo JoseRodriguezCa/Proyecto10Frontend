@@ -1,6 +1,7 @@
 import { navigateTo } from "../../router/routes";
 import { containerBoton } from "../BtnHeader/BtnHeader";
 import { buscador } from "../Buscador/Buscador";
+import { BuscadorMobile } from "../BuscadorMobile/BuscadorMobile";
 import { Logo } from "../Logo/Logo";
 import "./Header.css";
 
@@ -73,7 +74,7 @@ export const mobileHeader = () => {
   `;
 
   divContainer.classList = "divContainer";
-  const b = buscador();
+  const b = BuscadorMobile();
   divContainer.append(b)
   header.append(divContainer);
   document.body.prepend(header);

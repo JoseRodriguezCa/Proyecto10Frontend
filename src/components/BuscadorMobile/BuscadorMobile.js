@@ -1,11 +1,11 @@
 import "./BuscadorMobile.css";
 
 export const BuscadorMobile = () => {
-  const divMain = document.querySelector('.div-main');
   const divInput = document.createElement("div");
   const PruebaBuscador = document.createElement("input");
   PruebaBuscador.type = "text";
-  PruebaBuscador.classList = "prueba-input";
+  PruebaBuscador.classList = "buscador";
+  divInput.classList = "div-input-buscador"
   divInput.append(PruebaBuscador)
-  divMain.append(divInput);
+  return divInput
 }
