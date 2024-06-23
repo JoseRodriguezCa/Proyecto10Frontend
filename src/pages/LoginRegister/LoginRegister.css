@@ -113,3 +113,14 @@
 .file-input {
   width: 200px;
 }
+
+
+
+@media (max-width: 800px) {
+  .login-form {
+    width: 75%;
+  }
+  .register-form {
+    width: 75%;
+  }
+ }

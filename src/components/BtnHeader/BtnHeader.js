@@ -47,7 +47,7 @@ export const containerBoton = () => {
       localStorage.removeItem("tokenUser");
       localStorage.removeItem("user");
       navigateTo("/events?page=1");
-      HeaderReload();
+      window.location.reload()
     });
 
     btnContainerDrc.append(userName, btnDerecha4, btnDerecha3);

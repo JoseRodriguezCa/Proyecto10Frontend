@@ -5,11 +5,10 @@ import { Main } from "./src/components/Main/Main";
 import { router, navigateTo } from "./src/router/routes";
 import "./style.css";
 
-
 function checkScreenWidth() {
   const screenWidth = window.innerWidth;
 
-  if (screenWidth >= 800) {
+  if (screenWidth >= 801) {
     Header();
   }
 

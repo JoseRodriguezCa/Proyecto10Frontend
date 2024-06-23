@@ -114,8 +114,7 @@ const submit = async (inputUserName, inputPassword, e, form, checkboxInput) => {
   localStorage.setItem("tokenUser", respuestaFinal.token);
   localStorage.setItem("user", JSON.stringify(userWithoutRole));
   navigateTo("/events");
-  HeaderReload()
-  
+  window.location.reload()
 };
 
 const register = (form) => {

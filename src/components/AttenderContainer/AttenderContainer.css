@@ -38,3 +38,10 @@
 .delete-attender {
     cursor: pointer;
 }
+
+
+@media (max-width: 800px) { 
+    .attendees-div{
+        gap: 10px;
+    }
+}

@@ -1,25 +1,21 @@
-// Importar las funciones y estilos necesarios
 import { navigateTo } from "../../router/routes";
 import { containerBoton } from "../BtnHeader/BtnHeader";
 import { buscador } from "../Buscador/Buscador";
 import { Logo } from "../Logo/Logo";
 import "./Header.css";
 
-// Crear el contenedor principal una sola vez
+const app = document.querySelector("#app");
 const divContainer = document.createElement("div");
 
-// Función para recargar el contenido del header
 export const HeaderReload = () => {
   divContainer.innerHTML = "";
-  
+
   const l = Logo();
   const { btnContainerIzq, btnContainerDrc } = containerBoton();
   divContainer.append(l, btnContainerIzq, btnContainerDrc);
 };
 
-// Función para inicializar el header estándar
 export const Header = () => {
-  // Verificar si ya existe el header para evitar duplicaciones
   if (document.querySelector(".header")) {
     return;
   }
@@ -31,20 +27,19 @@ export const Header = () => {
   const b = buscador();
   divContainer.insertBefore(b, divContainer.querySelector(".btnContainerDrc"));
   header.append(divContainer);
-  header.classList.add("header"); // Agregar clase header
+  header.classList.add("header");
   document.body.prepend(header);
 };
 
-// Función para inicializar el header móvil
 export const mobileHeader = () => {
-  // Verificar si ya existe el header móvil para evitar duplicaciones
   if (document.querySelector(".mobile-header")) {
     return;
   }
-
+  const storedUser = JSON.parse(localStorage.getItem("user"));
   const header = document.createElement("header");
   divContainer.innerHTML = "";
-  divContainer.innerHTML = `
+  if (storedUser) {
+    divContainer.innerHTML = `
     <div class="navigation-card">
       <a href="/events" class="tab home">
         <svg class="svgIcon" viewBox="0 0 104 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -81,40 +76,101 @@ export const mobileHeader = () => {
           </defs>
         </svg>
       </a>
-      <a href="/logout" class="tab logout">
+      <button class="tab logout">
         <svg class="svgIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
           <path d="M14 8v-4a2 2 0 0 0 -2 -2h-7a2 2 0 0 0 -2 2v16a2 2 0 0 0 2 2h7a2 2 0 0 0 2 -2v-4" />
           <path d="M7 12h14l-3 -3m0 6l3 -3" />
         </svg>
+      </button>
+    </div>
+  `;
+
+    divContainer.classList = "divContainer mobile";
+    const b = buscador();
+    header.append(divContainer, b);
+    header.classList.add("mobile-header");
+    document.body.append(header);
+    const links = divContainer.querySelectorAll("a.tab");
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const path = link.getAttribute("href");
+        navigateTo(path);
+      });
+    });
+
+    const logoutBtn = document.querySelector(".logout");
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      localStorage.removeItem("tokenUser");
+      localStorage.removeItem("user");
+      navigateTo("/events?page=1");
+    });
+
+    const searchTab = document.getElementById("searchTab");
+    searchTab.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (b.style.opacity === "1") {
+        b.style.opacity = "0";
+      } else {
+        b.style.opacity = "1";
+      }
+    });
+  } else {
+    divContainer.innerHTML = `
+    <div class="navigation-card">
+      <a href="/events" class="tab home">
+        <svg class="svgIcon" viewBox="0 0 104 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M100.5 40.75V96.5H66V68.5V65H62.5H43H39.5V68.5V96.5H3.5V40.75L52 4.375L100.5 40.75Z" stroke="black" stroke-width="7"></path>
+        </svg>
+      </a>
+      <button class="tab search" id="searchTab">
+        <svg width="101" height="114" viewBox="0 0 101 114" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <circle cx="46.1726" cy="46.1727" r="29.5497" transform="rotate(36.0692 46.1726 46.1727)" stroke="black" stroke-width="7"></circle>
+          <line x1="61.7089" y1="67.7837" x2="97.7088" y2="111.784" stroke="black" stroke-width="7"></line>
+        </svg>
+      </button>
+      <a href="/login" class="tab login">
+        <svg class="svgIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <path d="M14 8v-2a2 2 0 0 0 -2 -2h-5a2 2 0 0 0 -2 2v12a2 2 0 0 0 2 2h5a2 2 0 0 0 2 -2v-2" />
+          <path d="M20 12h-13l3 -3m0 6l-3 -3" />
+        </svg>
+      </a>
+      <a href="/register" class="tab register">
+        <svg class="svgIcon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+          <circle cx="12" cy="8" r="4" />
+          <path d="M6 20v-1a4 4 0 0 1 4 -4h4a4 4 0 0 1 4 4v1" />
+          <path d="M16 11h6m-3 -3v6" />
+        </svg>
       </a>
     </div>
   `;
 
-  divContainer.classList = "divContainer mobile"; // Agregar clase para diferenciar el header móvil
-  const b = buscador(); // Instanciar el buscador aquí
-  header.append(divContainer, b);
-  header.classList.add("mobile-header"); // Agregar clase para el header móvil
-  document.body.append(header);
-
-  // Manejar eventos de los enlaces para navegación
-  const links = divContainer.querySelectorAll("a.tab");
-  links.forEach(link => {
-    link.addEventListener("click", (e) => {
-      e.preventDefault();
-      const path = link.getAttribute("href");
-      navigateTo(path); // Asegurar que navigateTo esté definido correctamente
+    divContainer.classList = "divContainer mobile";
+    const b = buscador();
+    header.append(divContainer, b);
+    header.classList.add("mobile-header");
+    document.body.append(header);
+    const links = divContainer.querySelectorAll("a.tab");
+    links.forEach((link) => {
+      link.addEventListener("click", (e) => {
+        e.preventDefault();
+        const path = link.getAttribute("href");
+        navigateTo(path);
+      });
     });
-  });
 
-  // Toggle para la visibilidad del buscador
-  const searchTab = document.getElementById("searchTab");
-  searchTab.addEventListener("click", (e) => {
-    e.preventDefault();
-    if (b.style.opacity === "1") {
-      b.style.opacity = "0";
-    } else {
-      b.style.opacity = "1";
-    }
-  });
+    const searchTab = document.getElementById("searchTab");
+    searchTab.addEventListener("click", (e) => {
+      e.preventDefault();
+      if (b.style.opacity === "1") {
+        b.style.opacity = "0";
+      } else {
+        b.style.opacity = "1";
+      }
+    });
+  }
 };

@@ -8,6 +8,7 @@
     transition: opacity 0.3s ease-in-out;
     height: 85%;
     overflow: auto;
+    z-index: 100;
 }
 
   .admin-panel-container.active {
@@ -28,7 +29,7 @@
   cursor: pointer;
   float: right;
   right: 5px;
-  top: 60px;
+  top: 10px;
 }
 
 @media (max-width: 800px) {

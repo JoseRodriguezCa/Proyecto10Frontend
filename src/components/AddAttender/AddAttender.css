@@ -64,3 +64,10 @@
     margin-top: 10px;
     background-color: brown;
 }
+
+
+@media (max-width: 800px) { 
+    .form-container form {
+        width: 75%;
+    }
+}

@@ -23,3 +23,11 @@
 .div-button-event .btnHeader:last-of-type:hover {
   background-color: rgb(182, 0, 0);
 }
+
+@media (max-width: 800px) {
+  .right-section {
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+  }
+}
