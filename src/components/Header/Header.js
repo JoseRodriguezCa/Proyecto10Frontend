@@ -105,7 +105,7 @@ export const mobileHeader = () => {
       e.preventDefault();
       localStorage.removeItem("tokenUser");
       localStorage.removeItem("user");
-      navigateTo("/events?page=1");
+      window.location.reload()
     });
 
     const searchTab = document.getElementById("searchTab");
