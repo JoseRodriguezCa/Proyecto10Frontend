@@ -195,6 +195,9 @@
     -o-border-radius: 0;
   }
 
+  .h1-error {
+    text-align: center;
+  }
 
 }
 

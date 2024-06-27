@@ -49,7 +49,7 @@ export const buscar = async (divMain) => {
     const events = await event.json();
 
     if (event.status === 404) {
-      divMain.style.height = "63svh";
+      divMain.style.height = "67svh";
       divMain.innerHTML = `
       <h1 class="h1-error" >No se encontró ningún evento con ese título</h1>`;
       divMain.classList.remove("hidden");
