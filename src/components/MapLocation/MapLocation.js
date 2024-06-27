@@ -21,7 +21,7 @@ export const MapLocation = (event) => {
     const staticMapImage = document.createElement("img");
     staticMapImage.src = `https://maps.googleapis.com/maps/api/staticmap?center=${encodeURIComponent(
       event.location
-    )}&zoom=15&size=200x200&maptype=roadmap&markers=color:red%7C${encodeURIComponent(
+    )}&zoom=15&size=400x200&maptype=roadmap&markers=color:red%7C${encodeURIComponent(
       event.location
     )}&key=AIzaSyDdCS6ceR3AlHmM0w-S0z9Rv42VkU7VZmM`;
     staticMapImage.classList.add("static-map-image");
