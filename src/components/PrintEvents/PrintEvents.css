@@ -123,4 +123,9 @@
         opacity: 1;
         transition: opacity 0.5s ease;
       }
+      
+      .div-events.hidden {
+        opacity: 0;
+        min-height: 545px;
+      }
   }
