@@ -3,7 +3,7 @@
   line-height: 1.5;
   font-weight: 400;
 
-  background-color: rgb(226, 191, 125);
+  background-color: var(--color-fondo);
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -11,10 +11,10 @@
   -moz-osx-font-smoothing: grayscale;
 
   --color-primario: #03223f;
-  --color-secundario: #038bbb;
-  --color-terciario: #fccb6f;
+  --color-cart: #85b1d7;
+  --color-header: rgb(245, 214, 157);
   --color-cuaternario: #e19f41;
-  --color-fondo: #010d23;
+  --color-fondo: rgb(219, 216, 212);
 
 }
 
