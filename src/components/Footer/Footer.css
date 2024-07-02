@@ -50,3 +50,11 @@
 .admin-panel:hover {
     text-decoration: underline;
 }
+
+
+@media (max-width: 800px) {
+  .footer-container {
+    height: 30svh;
+  }
+}
+
