@@ -1,5 +1,6 @@
 main {
     width: 100%;
+    min-height: 65svh;
 }
 
 .div-main {
@@ -12,3 +13,10 @@ main {
     opacity: 0;
     pointer-events: none; 
 }
+
+
+@media only screen and (max-width: 800px) {
+    main {
+        min-height: 90svh;
+    }
+ }
