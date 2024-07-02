@@ -1,5 +1,6 @@
 import { Footer } from "../../components/Footer/Footer";
 import { HeaderReload } from "../../components/Header/Header";
+import { LoginLoader } from "../../components/Loader/Loader";
 import { Logo } from "../../components/Logo/Logo";
 import { navigateTo } from "../../router/routes";
 import { Home } from "../Home/Home";
@@ -73,8 +74,9 @@ const login = (form) => {
 
 const submit = async (inputUserName, inputPassword, e, form, checkboxInput) => {
   e.preventDefault();
-
-  const userName = inputUserName.value;
+  LoginLoader(form)
+  setTimeout(async () => {
+    const userName = inputUserName.value;
   const password = inputPassword.value;
 
   const objetoFinal = JSON.stringify({
@@ -95,6 +97,10 @@ const submit = async (inputUserName, inputPassword, e, form, checkboxInput) => {
   }
 
   if (res.status === 400) {
+    const loaderLogin = document.querySelector(".loader-login");
+    if (loaderLogin) {
+      loaderLogin.remove();
+    }
     const pError = document.createElement("p");
     pError.classList.add("p-error");
     pError.textContent = "Usuario o contraseña incorrectos";
@@ -116,6 +122,8 @@ const submit = async (inputUserName, inputPassword, e, form, checkboxInput) => {
   localStorage.setItem("user", JSON.stringify(userWithoutRole));
   navigateTo("/events");
   window.location.reload()
+  }, 5000);
+  
 };
 
 const register = (form) => {
