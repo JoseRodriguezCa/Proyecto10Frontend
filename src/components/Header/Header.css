@@ -67,7 +67,11 @@ header {
   }
 
   .logout {
-    background-color: #f12222d4;
+    border: none;
+  }
+
+  .navigation-card i {
+    font-size: 20px;
   }
 }
 

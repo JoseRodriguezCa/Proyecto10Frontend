@@ -67,64 +67,82 @@ const login = (form) => {
   
 
   form.addEventListener("submit", (e) =>
-    submit(inputUserName, inputPassword, e, form, checkboxInput)
+    submit(inputUserName, inputPassword, e, form, checkboxInput,buttonInput)
   );
 };
 
 
-const submit = async (inputUserName, inputPassword, e, form, checkboxInput) => {
+const submit = async (inputUserName, inputPassword, e, form, checkboxInput, buttonInput) => {
   e.preventDefault();
-  LoginLoader(form)
+  buttonInput.remove();
+  LoginLoader(form);
+  
   setTimeout(async () => {
     const userName = inputUserName.value;
-  const password = inputPassword.value;
+    const password = inputPassword.value;
 
-  const objetoFinal = JSON.stringify({
-    userName,
-    password,
-  });
-  const res = await fetch("https://proyecto10-six.vercel.app/api/users/login", {
-    method: "POST",
-    body: objetoFinal,
-    headers: {
-      "content-type": "application/json",
-    },
-  });
+    const objetoFinal = JSON.stringify({
+      userName,
+      password,
+    });
 
-  const pError = document.querySelector(".p-error");
-  if (pError) {
-    pError.remove();
-  }
+    const res = await fetch("https://proyecto10-six.vercel.app/api/users/login", {
+      method: "POST",
+      body: objetoFinal,
+      headers: {
+        "content-type": "application/json",
+      },
+    });
 
-  if (res.status === 400) {
-    const loaderLogin = document.querySelector(".loader-login");
-    if (loaderLogin) {
-      loaderLogin.remove();
+    const pError = document.querySelector(".p-error");
+    if (pError) {
+      pError.remove();
     }
-    const pError = document.createElement("p");
-    pError.classList.add("p-error");
-    pError.textContent = "Usuario o contraseña incorrectos";
-    form.appendChild(pError);
 
-    inputUserName.value = "";
-    inputPassword.value = "";
-    inputPassword.type = "password";
-    checkboxInput.checked = false;
+    if (res.status === 400) {
+      const loaderLogin = document.querySelector(".loader-login");
+      if (loaderLogin) {
+        loaderLogin.remove();
+      }
 
-    return;
-  }
+      const existingButton = form.querySelector(".button-input");
+      if (existingButton) {
+        existingButton.remove();
+      }
 
-  const respuestaFinal = await res.json();
+      const newButtonInput = document.createElement("button");
+      newButtonInput.classList = "button-input";
+      newButtonInput.textContent = "Login";
 
-  const { rol, ...userWithoutRole } = respuestaFinal.user;
+      const pError = document.createElement("p");
+      pError.classList.add("p-error");
+      pError.textContent = "Usuario o contraseña incorrectos";
 
-  localStorage.setItem("tokenUser", respuestaFinal.token);
-  localStorage.setItem("user", JSON.stringify(userWithoutRole));
-  navigateTo("/events");
-  window.location.reload()
+      form.append(pError, newButtonInput);
+
+      inputUserName.value = "";
+      inputPassword.value = "";
+      inputPassword.type = "password";
+      checkboxInput.checked = false;
+
+      newButtonInput.addEventListener("click", (e) => {
+        submit(inputUserName, inputPassword, e, form, checkboxInput, newButtonInput);
+      });
+
+      return;
+    }
+
+    const respuestaFinal = await res.json();
+
+    const { rol, ...userWithoutRole } = respuestaFinal.user;
+
+    localStorage.setItem("tokenUser", respuestaFinal.token);
+    localStorage.setItem("user", JSON.stringify(userWithoutRole));
+    navigateTo("/events");
+    window.location.reload();
   }, 5000);
-  
 };
+
 
 const register = (form) => {
   const inputUserName = document.createElement("input");
@@ -167,41 +185,71 @@ const register = (form) => {
   form.append(l, inputUserName, inputPassword, checkboxDiv,inputEmail,fileLabel,fileInput, buttonInput);
 
   form.addEventListener("submit", (e) =>
-    submitRegister(inputUserName, inputPassword,inputEmail,fileInput, e, form)
+    submitRegister(inputUserName, inputPassword,inputEmail,fileInput, e, form,buttonInput)
   );
 }
 
-const submitRegister = async (inputUserName, inputPassword,inputEmail,fileInput, e, form) => {
+const submitRegister = async (inputUserName, inputPassword, inputEmail, fileInput, e, form, buttonInput) => {
   e.preventDefault();
-
-  const body = new FormData();
-  body.append("userName", inputUserName.value);
-  body.append("password", inputPassword.value);
-  body.append("email", inputEmail.value);
-  body.append("profileimg", fileInput.files[0]);
-
-  const res = await fetch("https://proyecto10-six.vercel.app/api/users/register", {
-    method: "POST",
-    body: body,
-  });
-
-  const pError = document.querySelector(".p-error");
-  if (pError) {
-    pError.remove();
-  }
-
-  if (res.status === 400) {
-    const errorResponse = await res.json();
-    alert(errorResponse.message || "Es necesario rellenar todos los campos")
-    console.log(errorResponse);
-    return;
-  }
-
-
-
-  if(res.ok) {
-    alert("Te has registrado con exito");
-    Home()
-  }
-
+  buttonInput.remove();
+  LoginLoader(form); 
+  setTimeout(async() => {
+    const body = new FormData();
+    body.append("userName", inputUserName.value);
+    body.append("password", inputPassword.value);
+    body.append("email", inputEmail.value);
+    body.append("profileimg", fileInput.files[0]);
+  
+    const res = await fetch("https://proyecto10-six.vercel.app/api/users/register", {
+      method: "POST",
+      body: body,
+    });
+  
+    const pError = document.querySelector(".p-error");
+    if (pError) {
+      pError.remove();
+    }
+  
+    if (res.status === 400) {
+      const errorResponse = await res.json();
+      console.log(errorResponse);
+  
+      const loaderLogin = document.querySelector(".loader-login");
+      if (loaderLogin) {
+        loaderLogin.remove();
+      }
+  
+      const existingButton = form.querySelector(".button-input");
+      if (existingButton) {
+        existingButton.remove();
+      }
+  
+      const newButtonInput = document.createElement("button");
+      newButtonInput.classList = "button-input";
+      newButtonInput.textContent = "Register";
+  
+      const pError = document.createElement("p");
+      pError.classList.add("p-error");
+      pError.textContent = errorResponse.message || "Es necesario rellenar todos los campos";
+  
+      form.append(pError, newButtonInput);
+  
+      inputUserName.value = "";
+      inputPassword.value = "";
+      inputEmail.value = "";
+      fileInput.value = "";
+  
+      newButtonInput.addEventListener("click", (e) => {
+        submitRegister(inputUserName, inputPassword, inputEmail, fileInput, e, form, newButtonInput);
+      });
+  
+      return;
+    }
+  
+    if (res.ok) {
+      alert("Te has registrado con éxito");
+      Home();
+    }
+  }, 5000);
+ 
 };
