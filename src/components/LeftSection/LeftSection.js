@@ -38,9 +38,12 @@ export const LeftSection = (event, divMain, eventId, token, storedUser) => {
       RemoveAttender(e, eventId, divMain, token, userAttending)
     );
   } else {
-    const attendButton = crearBoton("Asistiré", `/event/${eventId}/add-attender`);
-    attendButton.classList.add("attend-button");
-    leftSection.append(attendButton);
+    if(storedUser) {
+      const attendButton = crearBoton("Asistiré", `/event/${eventId}/add-attender`);
+      attendButton.classList.add("attend-button");
+      leftSection.append(attendButton);
+    }
+
   }
 
   return leftSection;

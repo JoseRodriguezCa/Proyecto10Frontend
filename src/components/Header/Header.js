@@ -58,7 +58,6 @@ export const mobileHeader = () => {
       </button>
     </div>
   `;
-
     divContainer.classList = "divContainer mobile";
     const b = buscador();
     header.append(divContainer, b);

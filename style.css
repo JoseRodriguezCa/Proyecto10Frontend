@@ -11,10 +11,10 @@
   -moz-osx-font-smoothing: grayscale;
 
   --color-primario: #03223f;
-  --color-cart: #85b1d7;
-  --color-header: rgb(245, 214, 157);
+  --color-cart: white;
+  --color-header: #9d9c9c;
   --color-cuaternario: #0e467b;
-  --color-fondo: rgb(219, 216, 212);
+  --color-fondo: #333;
 
 }
 
@@ -27,4 +27,3 @@
   box-sizing:border-box;
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
 }
-

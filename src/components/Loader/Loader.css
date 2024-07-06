@@ -35,22 +35,23 @@
   @keyframes pulse {
     0% {
       transform: scale(0.8);
-      background-color: #b3d4fc;
-      box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+      background-color: #e0e0e0; /* Gris claro */
+      box-shadow: 0 0 0 0 rgba(224, 224, 224, 0.7); /* Gris claro con opacidad */
     }
   
     50% {
       transform: scale(1.2);
-      background-color: #6793fb;
-      box-shadow: 0 0 0 10px rgba(178, 212, 252, 0);
+      background-color: #ffffff; /* Blanco */
+      box-shadow: 0 0 0 10px rgba(224, 224, 224, 0); /* Gris claro transparente */
     }
   
     100% {
       transform: scale(0.8);
-      background-color: #b3d4fc;
-      box-shadow: 0 0 0 0 rgba(178, 212, 252, 0.7);
+      background-color: #e0e0e0; /* Gris claro */
+      box-shadow: 0 0 0 0 rgba(224, 224, 224, 0.7); /* Gris claro con opacidad */
     }
   }
+  
 
 
   .loader-login svg {

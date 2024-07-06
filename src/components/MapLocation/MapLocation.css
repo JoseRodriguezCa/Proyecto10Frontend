@@ -12,7 +12,7 @@
 }
 
 .event-location {
-    color: black;
+    color: white;
     transition: all 0.5s;
     -webkit-transition: all 0.5s;
     -moz-transition: all 0.5s;
@@ -23,3 +23,10 @@
 .event-location:hover{
     color: rgb(145, 145, 145);
 }
+
+
+@media (max-width: 800px) {
+    .div-location {
+        justify-content: center;
+    }
+ }
