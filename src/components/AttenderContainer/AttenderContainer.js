@@ -18,12 +18,15 @@ export const AttenderContainer = (event, divMain, eventId,token,storedUser) => {
       const divAttender = document.createElement("div");
       const attendeesName = document.createElement("h2");
       const imgProfile = document.createElement("img");
-      if (storedUser.rol === "admin" || event.user._id === storedUser._id) {
-        const removeAttender = document.createElement("i");
-        removeAttender.classList = "fa-solid fa-circle-xmark";
-        removeAttender.classList.add("delete-attender");
-        removeAttender.addEventListener("click", (e) => DeleteAttenderFromEvent(e,eventId,attender,token,divMain));
-        divAttender.prepend(removeAttender);
+      if(storedUser) {
+        if (storedUser.rol === "admin" || event.user._id === storedUser._id) {
+          const removeAttender = document.createElement("i");
+          removeAttender.classList = "fa-solid fa-circle-xmark";
+          removeAttender.classList.add("delete-attender");
+          removeAttender.addEventListener("click", (e) => DeleteAttenderFromEvent(e,eventId,attender,token,divMain));
+          divAttender.prepend(removeAttender);
+        }
+
       }
   
       imgProfile.classList = "creator-image";
