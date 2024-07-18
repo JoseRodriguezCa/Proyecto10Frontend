@@ -1,7 +1,5 @@
-import { ConfigUser } from "../ConfigUser/ConfigUser";
 import "./BtnHeader.css";
 import { navigateTo } from "../../router/routes";
-import { HeaderReload } from "../Header/Header";
 
 export const crearBoton = (texto, href) => {
   const aBoton = document.createElement("a");
@@ -40,7 +38,7 @@ export const containerBoton = () => {
     btnDerecha4.classList.add("config-user");
     userName.addEventListener("click", (e) => {
       e.preventDefault();
-      navigateTo("/config-user", storedUser, token);
+      navigateTo("/config-user", token);
     });
     btnDerecha3.addEventListener("click", (e) => {
       e.preventDefault();

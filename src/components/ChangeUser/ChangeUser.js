@@ -1,4 +1,5 @@
 import { Home } from "../../pages/Home/Home";
+import { navigateTo } from "../../router/routes";
 import { HeaderReload } from "../Header/Header";
 import { isAdmin } from "../IsAdmin/IsAdmin";
 import { viewAdminPanel } from "../viewAdminPanel/viewAdminPanel";
@@ -55,11 +56,14 @@ export const changeUser = async (
       localStorage.setItem("user", JSON.stringify(userWithoutRole));
     }
     alert("Datos Editados Correctamente");
-    HeaderReload();
-    Home();
+    
     const adminPanel = document.querySelector(".admin-panel-container");
     document.body.style.overflow = "auto";
-    adminPanel.remove()
-
+    if(adminPanel) {
+      adminPanel.remove()
+    }
+    navigateTo("/events");
+    window.location.reload()
+    
   }
 };

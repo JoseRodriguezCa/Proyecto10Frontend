@@ -2,11 +2,12 @@ import { changeUser } from "../ChangeUser/ChangeUser";
 import { createFormElements } from "../FormElementsUser/FormElementsUser";
 import "./ConfigUser.css";
 
-export const ConfigUser = (e, storedUser, token) => {
+export const ConfigUser = (e) => {
+  const storedUser = JSON.parse(localStorage.getItem("user"));
+  const token = localStorage.getItem("tokenUser");
   if(e) {
     e.preventDefault();
   }
-
   const divMain = document.querySelector(".div-main");
 
   if (!document.getElementById("config-modal")) {

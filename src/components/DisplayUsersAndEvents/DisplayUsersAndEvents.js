@@ -5,6 +5,7 @@ import "./DisplayUsersAndEvents.css";
 
 export const displayUsersAndEvents = (users, events, usersContainer, token) => {
   usersContainer.innerHTML = '';
+  const eventsItems = events.items
   users.forEach((user) => {
     const userDiv = document.createElement("div");
     userDiv.classList.add("user-div");
@@ -46,7 +47,7 @@ export const displayUsersAndEvents = (users, events, usersContainer, token) => {
     divUserBtn.append(editUserButton, deleteUserButton);
     userDiv.append(divUserBtn);
 
-    const userEvents = events.filter((event) => event.user._id === user._id);
+    const userEvents = eventsItems.filter((event) => event.user._id === user._id);
     userEvents.forEach((event) => {
       const eventDiv = document.createElement("div");
       eventDiv.classList.add("event-div");

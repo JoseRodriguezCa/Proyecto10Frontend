@@ -35,39 +35,42 @@ export const LoginRegister = (e, viewType) => {
 
 const login = (form) => {
   const inputUserName = document.createElement("input");
+  const inputPasswordWrapper = document.createElement("div");
   const inputPassword = document.createElement("input");
+  const eyeIcon = document.createElement("i");
   const buttonInput = document.createElement("button");
-  const checkboxDiv = document.createElement("div");
-  const checkboxLabel = document.createElement("label");
-  const checkboxInput = document.createElement("input");
   const l = Logo();
+  
   inputUserName.classList = "user-input";
+  inputPasswordWrapper.classList = "password-input-wrapper";
   inputPassword.classList = "password-input";
-  buttonInput.classList = "button-input";
+  eyeIcon.classList.add("fa", "fa-eye", "eye-icon");
+  
   inputPassword.type = "password";
   inputUserName.placeholder = "Nombre de Usuario";
   inputPassword.placeholder = "*****";
   inputUserName.required = true;
   inputPassword.required = true;
   buttonInput.textContent = "Login";
-  checkboxDiv.classList.add("checkbox-div");
-  checkboxLabel.classList.add("checkbox-label");
-  checkboxInput.classList.add("checkbox-input");
-  checkboxLabel.textContent = "Mostrar Contraseña";
-  checkboxInput.type = "checkbox";
-  checkboxInput.addEventListener("change", () => {
-    if (checkboxInput.checked === false) {
-      inputPassword.type = "password";
-    } else {
+  buttonInput.classList = "button-input";
+  
+  eyeIcon.addEventListener("click", () => {
+    if (inputPassword.type === "password") {
       inputPassword.type = "text";
+      eyeIcon.classList.remove("fa-eye");
+      eyeIcon.classList.add("fa-eye-slash");
+    } else {
+      inputPassword.type = "password";
+      eyeIcon.classList.remove("fa-eye-slash");
+      eyeIcon.classList.add("fa-eye");
     }
   });
-  checkboxLabel.prepend(checkboxInput);
-  checkboxDiv.appendChild(checkboxLabel);
-  form.append(l, inputUserName, inputPassword, checkboxDiv, buttonInput);
-
+  
+  inputPasswordWrapper.append(inputPassword, eyeIcon);
+  form.append(l, inputUserName, inputPasswordWrapper, buttonInput);
+  
   form.addEventListener("submit", (e) =>
-    submit(inputUserName, inputPassword, e, form, checkboxInput, buttonInput)
+    submit(inputUserName, inputPassword, e, form, eyeIcon, buttonInput)
   );
 };
 
@@ -76,7 +79,7 @@ const submit = async (
   inputPassword,
   e,
   form,
-  checkboxInput,
+  eyeIcon,
   buttonInput
 ) => {
   e.preventDefault();
@@ -127,7 +130,8 @@ const submit = async (
     inputUserName.value = "";
     inputPassword.value = "";
     inputPassword.type = "password";
-    checkboxInput.checked = false;
+    eyeIcon.classList.remove("fa-eye-slash");
+    eyeIcon.classList.add("fa-eye");
 
     newButtonInput.addEventListener("click", (e) => {
       submit(
@@ -135,7 +139,7 @@ const submit = async (
         inputPassword,
         e,
         form,
-        checkboxInput,
+        eyeIcon,
         newButtonInput
       );
     });
@@ -155,54 +159,63 @@ const submit = async (
 
 const register = (form) => {
   const inputUserName = document.createElement("input");
+  const inputPasswordWrapper = document.createElement("div");
   const inputPassword = document.createElement("input");
+  const eyeIcon = document.createElement("i");
   const inputEmail = document.createElement("input");
-  const fileLabel = document.createElement("label");
-  fileLabel.textContent = "Imagen de Perfil (archivo)";
   const fileInput = document.createElement("input");
-  fileInput.type = "file";
-  fileInput.name = "file";
-  fileInput.classList = "file-input";
+  const fileButton = document.createElement("button");
   const buttonInput = document.createElement("button");
-  const checkboxDiv = document.createElement("div");
-  const checkboxLabel = document.createElement("label");
-  const checkboxInput = document.createElement("input");
   const l = Logo();
+  
   inputUserName.classList = "user-input";
-  inputUserName.setAttribute("maxlength", "20");
+  inputPasswordWrapper.classList = "password-input-wrapper";
   inputPassword.classList = "password-input";
+  eyeIcon.classList.add("fa", "fa-eye", "eye-icon");
+  inputEmail.classList = "email-input";
+  fileInput.classList = "file-input";
+  fileButton.classList = "file-button";
   buttonInput.classList = "button-input";
+
   inputPassword.type = "password";
   inputEmail.type = "email";
+  fileInput.type = "file";
+
   inputUserName.placeholder = "Nombre de Usuario";
   inputPassword.placeholder = "*****";
-  inputEmail.placeholder = "Correo Electronico";
+  inputEmail.placeholder = "Correo Electrónico";
+  fileButton.textContent = "Imagen de Perfil";
+  buttonInput.textContent = "Registrarse";
+
   inputUserName.required = true;
   inputPassword.required = true;
   inputEmail.required = true;
   fileInput.required = true;
-  buttonInput.textContent = "Registrarse";
-  checkboxDiv.classList.add("checkbox-div");
-  checkboxLabel.classList.add("checkbox-label");
-  checkboxInput.classList.add("checkbox-input");
-  checkboxLabel.textContent = "Mostrar Contraseña";
-  checkboxInput.type = "checkbox";
-  checkboxInput.addEventListener("change", () => {
-    if (checkboxInput.checked === false) {
-      inputPassword.type = "password";
-    } else {
+
+  eyeIcon.addEventListener("click", () => {
+    if (inputPassword.type === "password") {
       inputPassword.type = "text";
+      eyeIcon.classList.remove("fa-eye");
+      eyeIcon.classList.add("fa-eye-slash");
+    } else {
+      inputPassword.type = "password";
+      eyeIcon.classList.remove("fa-eye-slash");
+      eyeIcon.classList.add("fa-eye");
     }
   });
-  checkboxLabel.prepend(checkboxInput);
-  checkboxDiv.appendChild(checkboxLabel);
+
+  fileButton.addEventListener("click", (e) => {
+    e.preventDefault();
+    fileInput.click();
+  });
+
+  inputPasswordWrapper.append(inputPassword, eyeIcon);
   form.append(
     l,
     inputUserName,
-    inputPassword,
-    checkboxDiv,
+    inputPasswordWrapper,
     inputEmail,
-    fileLabel,
+    fileButton,
     fileInput,
     buttonInput
   );
@@ -219,6 +232,7 @@ const register = (form) => {
     )
   );
 };
+
 
 const submitRegister = async (
   inputUserName,
@@ -297,7 +311,29 @@ const submitRegister = async (
   }
 
   if (res.ok) {
-    alert("Te has registrado con éxito");
-    Home();
+    const loginRes = await fetch("https://proyecto10-six.vercel.app/api/users/login", {
+      method: "POST",
+      body: JSON.stringify({
+        userName: inputUserName.value,
+        password: inputPassword.value,
+      }),
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    if (loginRes.ok) {
+      const respuestaFinal = await loginRes.json();
+      const { rol, ...userWithoutRole } = respuestaFinal.user;
+
+      localStorage.setItem("tokenUser", respuestaFinal.token);
+      localStorage.setItem("user", JSON.stringify(userWithoutRole));
+      navigateTo("/events");
+      window.location.reload();
+    } else {
+      alert("Registro exitoso, pero fallo al iniciar sesión automáticamente. Por favor, inicia sesión manualmente.");
+      Home();
+    }
   }
 };
+

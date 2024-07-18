@@ -1,5 +1,4 @@
 import { navigateTo } from "../../router/routes";
-import { buscador } from "../Buscador/Buscador";
 import "./PrintEvents.css";
 
 export const printEvents = (events, undenifed, divMain) => {

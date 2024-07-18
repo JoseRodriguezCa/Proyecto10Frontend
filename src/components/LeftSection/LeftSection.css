@@ -8,6 +8,7 @@
 .event-image {
     width: 70%;
     max-width: 500px;
+    max-height: 400px;
 }
 
 .event-description {

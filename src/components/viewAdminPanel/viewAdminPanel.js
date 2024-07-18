@@ -1,7 +1,7 @@
 // viewAdminPanel.js
 
 import { navigateTo } from "../../router/routes";
-import { fetchEvents } from "../../utils/fetchEvents";
+import { fetchPaginationEvents } from "../../utils/fetchPaginationEvents";
 import { fetchUsers } from "../../utils/fetchUsers";
 import { searchAdmin } from "../Buscador/Buscador";
 import { displayUsersAndEvents } from "../DisplayUsersAndEvents/DisplayUsersAndEvents";
@@ -38,7 +38,7 @@ export const viewAdminPanel = async (page = 1) => {
     const usersData = await fetchUsers(page);
     const users = usersData.items;
 
-    const events = await fetchEvents();
+    const events = await fetchPaginationEvents(page);
 
     const paginationContainer = PaginationButtons(
       usersData.currentPage,

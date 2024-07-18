@@ -11,7 +11,7 @@ export const routes = {
   "/login": (e) => LoginRegister(e, "login"),
   "/register": (e) => LoginRegister(e, "register"),
   "/create-event": (e) => CreateEvent(e),
-  "/config-user": (e, storedUser, token) => ConfigUser(e, storedUser, token),
+  "/config-user": (e) => ConfigUser(e),
   "/event/:id": (e, eventId, divMain, token, storedUser) => EventPage(e, eventId, divMain, token, storedUser),
   "/event/:id/add-attender": (e, eventId) => AddAttender(e, eventId),
   "/admin-panel": (e, page = 1) => viewAdminPanel(page),

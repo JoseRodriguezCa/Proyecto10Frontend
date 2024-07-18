@@ -2,7 +2,7 @@
 
 import "./PaginationButtons.css";
 import { navigateTo } from "../../router/routes";
-import { fetchEvents } from "../../utils/fetchEvents";
+import { fetchPaginationEvents } from "../../utils/fetchPaginationEvents";
 
 export const PaginationButtons = (currentPage, totalPages, fetchItems, displayItems, container, token, route, pageQueryParam) => {
     const paginationContainer = document.createElement("div");
@@ -42,7 +42,7 @@ export const PaginationButtons = (currentPage, totalPages, fetchItems, displayIt
 
     const fetchAndDisplayItems = async (page) => {
         try {
-            const eventData = await fetchEvents()
+            const eventData = await fetchPaginationEvents(page)
             const events = eventData;
             const usersData = await fetchItems(page);
             const users = usersData.items;
