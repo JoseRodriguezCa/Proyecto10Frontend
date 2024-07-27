@@ -1,4 +1,6 @@
 import { navigateTo } from "../../router/routes";
+import { fetchApi } from "../../utils/fetchApi";
+import { createInput } from "../createInput/createInput";
 import "./AddAttender.css";
 export const AddAttender = async (e, eventId) => {
   if (e) {
@@ -16,16 +18,14 @@ export const AddAttender = async (e, eventId) => {
   const formTitle = document.createElement("h1");
   const closeForm = document.createElement("i");
   const labelFirstName = document.createElement("label");
-  const inputfirstName = document.createElement("input");
+  const inputfirstName = createInput({name:"firstName",className:"firstName-input"});
   const labelLastName = document.createElement("label");
-  const inputlastName = document.createElement("input");
+  const inputlastName = createInput({name:"LastName",className:"lastName-input"});
   const buttonInput = document.createElement("button");
   buttonInput.textContent = "Asistiré";
   buttonInput.classList.add("btnHeader");
-  inputfirstName.classList = "fisrtName-input";
-  inputfirstName.id = "fisrtName-input";
+  inputfirstName.id = "firstName-input";
   inputfirstName.setAttribute("required", "");
-  inputlastName.classList = "lastName-input";
   inputlastName.id = "lastName-input";
   inputlastName.setAttribute("required", "");
   formTitle.classList = "form-title";
@@ -79,21 +79,14 @@ const submitAttender = async (
   e.preventDefault();
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const completeName = `${inputfirstName.value} ${inputlastName.value}`;
-  const objetoFinal = JSON.stringify({
+  const objetoFinal ={
     name: completeName,
     email: storedUser.email,
     event: eventId,
     user: storedUser._id,
-  });
+  };
 
-  const res = await fetch("https://proyecto10-six.vercel.app/api/attenders", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${token}`,
-      "content-type": "application/json",
-    },
-    body: objetoFinal,
-  });
+  const res = await fetchApi({endpoint:`attenders`,method:"POST",token,data:objetoFinal});
 
   if (res.ok) {
     document.body.style.overflow = "";

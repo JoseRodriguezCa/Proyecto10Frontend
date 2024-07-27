@@ -1,9 +1,10 @@
 import { changeUser } from "../ChangeUser/ChangeUser";
-import { deleteUser } from "../DeleteUser/DeleteUser";
-import { isAdmin } from "../IsAdmin/IsAdmin";
+import { createInput } from "../createInput/createInput";
+import { deleteUser } from "../../utils/DeleteUser/DeleteUser";
+import { isAdmin } from "../../utils/IsAdmin/IsAdmin";
 import "./FormElementsUser.css";
 
-export const createFormElements = (e, storedUser, token, modalconfigUser) => {
+export const createFormElements = (e, storedUser, token, modalconfigUser,user) => {
   const form = document.createElement("form");
   let roleSelect;
   form.classList.add("config-form");
@@ -12,9 +13,7 @@ export const createFormElements = (e, storedUser, token, modalconfigUser) => {
 
   const userNameLabel = document.createElement("label");
   userNameLabel.textContent = "Nombre de Usuario";
-  const userNameInput = document.createElement("input");
-  userNameInput.type = "text";
-  userNameInput.name = "userName";
+  const userNameInput = createInput({name:"userName"});
 
   const passwordLabel = document.createElement("label");
   passwordLabel.textContent = "Contraseña";
@@ -22,10 +21,7 @@ export const createFormElements = (e, storedUser, token, modalconfigUser) => {
   const passwordContainer = document.createElement("div");
   passwordContainer.classList.add("password-container");
 
-  const passwordInput = document.createElement("input");
-  passwordInput.type = "password";
-  passwordInput.name = "password";
-  passwordInput.classList.add("password-input");
+  const passwordInput = createInput({name:"password",type:"password",className:"password-input"});
 
   const togglePassword = document.createElement("i");
   togglePassword.classList.add("fa", "fa-eye", "toggle-password");
@@ -46,17 +42,12 @@ export const createFormElements = (e, storedUser, token, modalconfigUser) => {
 
   const emailLabel = document.createElement("label");
   emailLabel.textContent = "Email";
-  const emailInput = document.createElement("input");
-  emailInput.name = "email";
-  emailInput.type = "email";
+  const emailInput = createInput({name:"email",type:"email"});
 
   const fileInputContainer = document.createElement("div");
   fileInputContainer.classList.add("file-input-container");
 
-  const fileInput = document.createElement("input");
-  fileInput.type = "file";
-  fileInput.name = "file";
-  fileInput.classList.add("file-input");
+  const fileInput = createInput({name:"file",type:"file",className:"file-input"});
 
   const fileButton = document.createElement("button");
   fileButton.type = "button";
@@ -132,7 +123,8 @@ export const createFormElements = (e, storedUser, token, modalconfigUser) => {
       form,
       storedUser,
       token,
-      roleSelect
+      roleSelect,
+      user
     )
   );
 

@@ -62,7 +62,7 @@
   align-items: center;
   justify-content: center;
   gap: 18px;
-  height: 70%;
+  min-height: 70%;
   background-color: white;
   border: 1px solid black;
   border-radius: 30px;
@@ -97,6 +97,7 @@
   -moz-transition: all 0.5s;
   -ms-transition: all 0.5s;
   -o-transition: all 0.5s;
+  margin-bottom: 10px;
 }
 
 .button-input:hover {

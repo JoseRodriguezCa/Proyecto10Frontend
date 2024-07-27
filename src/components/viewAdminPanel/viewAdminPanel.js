@@ -1,8 +1,7 @@
 // viewAdminPanel.js
 
 import { navigateTo } from "../../router/routes";
-import { fetchPaginationEvents } from "../../utils/fetchPaginationEvents";
-import { fetchUsers } from "../../utils/fetchUsers";
+import { fetchPaginationData } from "../../utils/fetchPaginationData";
 import { searchAdmin } from "../Buscador/Buscador";
 import { displayUsersAndEvents } from "../DisplayUsersAndEvents/DisplayUsersAndEvents";
 import { PaginationButtons } from "../PaginationButtons/PaginationButtons";
@@ -35,16 +34,17 @@ export const viewAdminPanel = async (page = 1) => {
       adminPanel.classList.add("active");
     }, 700);
 
-    const usersData = await fetchUsers(page);
+    
+
+    const usersData = await fetchPaginationData("users",page,2);
     const users = usersData.items;
 
-    const events = await fetchPaginationEvents(page);
+    const events = await fetchPaginationData("events",page,20);
 
     const paginationContainer = PaginationButtons(
       usersData.currentPage,
       usersData.totalPages,
-      fetchUsers,
-      displayUsersAndEvents,
+      "usersAndEvents",
       usersContainer,
       token,
       "/admin-panel",

@@ -1,3 +1,4 @@
+import { fetchApi } from "../../utils/fetchApi";
 
 export const EditEvent = async (event) => {
   const token = localStorage.getItem("tokenUser");
@@ -16,16 +17,7 @@ export const EditEvent = async (event) => {
     const combinedDateTime = new Date(`${dateValue}T${timeValue}`);
     formData.set('date', combinedDateTime);
 
-    const response = await fetch(
-      `https://proyecto10-six.vercel.app/api/events/${event._id}`,
-      {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-        body: formData,
-      }
-    );
+    const response = await fetchApi({endpoint:`events/${event._id}`,method:"PUT",token,data:formData});
 
     if (response.ok) {
       const updatedEvent = await response.json();

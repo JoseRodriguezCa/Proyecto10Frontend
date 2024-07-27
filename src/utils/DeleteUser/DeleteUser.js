@@ -1,16 +1,9 @@
+import { fetchApi } from "../fetchApi";
 import { isAdmin } from "../IsAdmin/IsAdmin";
 
 
 export const deleteUser = async (e, storedUser, token) => {
-    const res = await fetch(
-      `https://proyecto10-six.vercel.app/api/users/${storedUser._id}`,
-      {
-        method: "DELETE",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      }
-    );
+    const res = await fetchApi({endpoint:`users/${storedUser._id}`,method:"DELETE",token});
   
     if (res.ok) {
       const response = await res.json();

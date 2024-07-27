@@ -1,11 +1,12 @@
 import { ConfigUser } from "../ConfigUser/ConfigUser";
-import { deleteUser } from "../DeleteUser/DeleteUser";
+import { CreateButton } from "../CreateButton/CreateButton";
+import { deleteUser } from "../../utils/DeleteUser/DeleteUser";
 import { EventEditModal } from "../EventEditModal/EventEditModal";
 import "./DisplayUsersAndEvents.css";
 
 export const displayUsersAndEvents = (users, events, usersContainer, token) => {
   usersContainer.innerHTML = '';
-  const eventsItems = events.items
+  const eventsItems = events.items;
   users.forEach((user) => {
     const userDiv = document.createElement("div");
     userDiv.classList.add("user-div");
@@ -30,22 +31,17 @@ export const displayUsersAndEvents = (users, events, usersContainer, token) => {
     const divUserBtn = document.createElement("div");
     divUserBtn.classList.add("div-user-btn");
 
-    const editUserButton = document.createElement("button");
-    editUserButton.classList.add("edit-user-btn");
-    editUserButton.textContent = "Editar Usuario";
-    editUserButton.addEventListener("click", (e) => {
+    const editUserButton = CreateButton("edit-user-btn", "Editar Usuario", (e) => {
       ConfigUser(e, user, token);
     });
 
-    const deleteUserButton = document.createElement("button");
-    deleteUserButton.classList.add("edit-user-btn");
-    deleteUserButton.textContent = "Eliminar Usuario";
-    deleteUserButton.addEventListener("click", (e) => {
+    const deleteUserButton = CreateButton("edit-user-btn", "Eliminar Usuario", (e) => {
       deleteUser(e, user, token);
     });
 
     divUserBtn.append(editUserButton, deleteUserButton);
     userDiv.append(divUserBtn);
+
 
     const userEvents = eventsItems.filter((event) => event.user._id === user._id);
     userEvents.forEach((event) => {
@@ -64,10 +60,7 @@ export const displayUsersAndEvents = (users, events, usersContainer, token) => {
       eventLocationP.textContent = `Ubicación: ${event.location}`;
       eventDiv.appendChild(eventLocationP);
 
-      const editEventButton = document.createElement("button");
-      editEventButton.classList.add("edit-event-btn");
-      editEventButton.textContent = "Editar Evento";
-      editEventButton.addEventListener("click", async () => {
+      const editEventButton = CreateButton("edit-event-btn", "Editar Evento", async () => {
         await EventEditModal(event, token);
       });
 

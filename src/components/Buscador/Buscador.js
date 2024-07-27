@@ -1,3 +1,4 @@
+import { fetchApi } from "../../utils/fetchApi";
 import { fetchUsersByUserName } from "../../utils/fetchUserByName";
 import { crearBoton } from "../BtnHeader/BtnHeader";
 import { displayUsersAndEvents } from "../DisplayUsersAndEvents/DisplayUsersAndEvents";
@@ -43,9 +44,7 @@ export const buscar = async (divMain) => {
       return;
     }
 
-    const event = await fetch(
-      `https://proyecto10-six.vercel.app/api/events/title/${valorBusqueda}`
-    );
+    const event = await fetchApi({endpoint:`events/title/${valorBusqueda}`});
     const events = await event.json();
 
     if (event.status === 404) {

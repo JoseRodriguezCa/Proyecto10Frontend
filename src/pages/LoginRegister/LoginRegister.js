@@ -1,8 +1,10 @@
+import { createInput } from "../../components/createInput/createInput";
 import { Footer } from "../../components/Footer/Footer";
 import { HeaderReload } from "../../components/Header/Header";
 import { LoginLoader } from "../../components/Loader/Loader";
 import { Logo } from "../../components/Logo/Logo";
 import { navigateTo } from "../../router/routes";
+import { fetchApi } from "../../utils/fetchApi";
 import { Home } from "../Home/Home";
 import "./LoginRegister.css";
 
@@ -34,23 +36,16 @@ export const LoginRegister = (e, viewType) => {
 };
 
 const login = (form) => {
-  const inputUserName = document.createElement("input");
+  const inputUserName = createInput({name:"userName",className:"user-input",placeholder:"Nombre de Usuario",required:"required",});
   const inputPasswordWrapper = document.createElement("div");
-  const inputPassword = document.createElement("input");
+  const inputPassword = createInput({name:"password",className:"password-input",placeholder:"******",required:"required", type:"password"});
   const eyeIcon = document.createElement("i");
   const buttonInput = document.createElement("button");
   const l = Logo();
   
-  inputUserName.classList = "user-input";
   inputPasswordWrapper.classList = "password-input-wrapper";
-  inputPassword.classList = "password-input";
   eyeIcon.classList.add("fa", "fa-eye", "eye-icon");
   
-  inputPassword.type = "password";
-  inputUserName.placeholder = "Nombre de Usuario";
-  inputPassword.placeholder = "*****";
-  inputUserName.required = true;
-  inputPassword.required = true;
   buttonInput.textContent = "Login";
   buttonInput.classList = "button-input";
   
@@ -88,109 +83,103 @@ const submit = async (
   const userName = inputUserName.value;
   const password = inputPassword.value;
 
-  const objetoFinal = JSON.stringify({
+  const objetoFinal = {
     userName,
     password,
-  });
+  };
 
-  const res = await fetch("https://proyecto10-six.vercel.app/api/users/login", {
-    method: "POST",
-    body: objetoFinal,
-    headers: {
-      "content-type": "application/json",
-    },
-  });
-
-  const pError = document.querySelector(".p-error");
-  if (pError) {
-    pError.remove();
-  }
-
-  if (res.status === 400) {
-    const loaderLogin = document.querySelector(".loader-login");
-    if (loaderLogin) {
-      loaderLogin.remove();
-    }
-
-    const existingButton = form.querySelector(".button-input");
-    if (existingButton) {
-      existingButton.remove();
-    }
-
-    const newButtonInput = document.createElement("button");
-    newButtonInput.classList = "button-input";
-    newButtonInput.textContent = "Login";
-
-    const pError = document.createElement("p");
-    pError.classList.add("p-error");
-    pError.textContent = "Usuario o contraseña incorrectos";
-
-    form.append(pError, newButtonInput);
-
-    inputUserName.value = "";
-    inputPassword.value = "";
-    inputPassword.type = "password";
-    eyeIcon.classList.remove("fa-eye-slash");
-    eyeIcon.classList.add("fa-eye");
-
-    newButtonInput.addEventListener("click", (e) => {
-      submit(
-        inputUserName,
-        inputPassword,
-        e,
-        form,
-        eyeIcon,
-        newButtonInput
-      );
+  try {
+    const res = await fetchApi({
+      endpoint: 'users/login',
+      method: 'POST',
+      data: objetoFinal
     });
 
-    return;
+    const pError = document.querySelector(".p-error");
+    if (pError) {
+      pError.remove();
+    }
+
+    if (!res.ok) {
+      if (res.status === 400) {
+        const errorData = await res.json();
+        const errorMessage = errorData.message || 'Usuario o contraseña incorrectos';
+
+        const loaderLogin = document.querySelector(".loader-login");
+        if (loaderLogin) {
+          loaderLogin.remove();
+        }
+
+        const existingButton = form.querySelector(".button-input");
+        if (existingButton) {
+          existingButton.remove();
+        }
+
+        const newButtonInput = document.createElement("button");
+        newButtonInput.classList = "button-input";
+        newButtonInput.textContent = "Login";
+
+        const pError = document.createElement("p");
+        pError.classList.add("p-error");
+        pError.textContent = errorMessage;
+
+        form.append(pError, newButtonInput);
+        inputUserName.value = "";
+        inputPassword.value = "";
+        inputPassword.type = "password";
+        eyeIcon.classList.remove("fa-eye-slash");
+        eyeIcon.classList.add("fa-eye");
+
+        newButtonInput.addEventListener("click", (e) => {
+          submit(
+            inputUserName,
+            inputPassword,
+            e,
+            form,
+            eyeIcon,
+            newButtonInput
+          );
+        });
+
+        return;
+      }
+    }
+
+    const respuestaFinal = await res.json();
+
+    const { rol, ...userWithoutRole } = respuestaFinal.user;
+
+    localStorage.setItem("tokenUser", respuestaFinal.token);
+    localStorage.setItem("user", JSON.stringify(userWithoutRole));
+    navigateTo("/events");
+    window.location.reload();
+  } catch (error) {
+    console.error('Submit Error:', error);
+    alert('Se produjo un error durante el inicio de sesión. Por favor, inténtalo de nuevo.');
   }
-
-  const respuestaFinal = await res.json();
-
-  const { rol, ...userWithoutRole } = respuestaFinal.user;
-
-  localStorage.setItem("tokenUser", respuestaFinal.token);
-  localStorage.setItem("user", JSON.stringify(userWithoutRole));
-  navigateTo("/events");
-  window.location.reload();
 };
 
+
 const register = (form) => {
-  const inputUserName = document.createElement("input");
+  const inputUserName = createInput({name:"userName",className:"user-input",placeholder:"Nombre de Usuario",required:"required",});
   const inputPasswordWrapper = document.createElement("div");
-  const inputPassword = document.createElement("input");
+  const inputPassword = createInput({name:"password",className:"password-input",placeholder:"******",required:"required", type:"password"});
   const eyeIcon = document.createElement("i");
-  const inputEmail = document.createElement("input");
-  const fileInput = document.createElement("input");
+  const inputEmail = createInput({name:"email",className:"email-input",placeholder:"Correo Electrónico",required:"required", type:"email"});
+  const fileInput = createInput({name:"profileimg",className:"file-input",required:"required", type:"file"});
   const fileButton = document.createElement("button");
   const buttonInput = document.createElement("button");
   const l = Logo();
   
-  inputUserName.classList = "user-input";
   inputPasswordWrapper.classList = "password-input-wrapper";
-  inputPassword.classList = "password-input";
   eyeIcon.classList.add("fa", "fa-eye", "eye-icon");
-  inputEmail.classList = "email-input";
-  fileInput.classList = "file-input";
   fileButton.classList = "file-button";
   buttonInput.classList = "button-input";
 
-  inputPassword.type = "password";
-  inputEmail.type = "email";
-  fileInput.type = "file";
 
-  inputUserName.placeholder = "Nombre de Usuario";
-  inputPassword.placeholder = "*****";
-  inputEmail.placeholder = "Correo Electrónico";
   fileButton.textContent = "Imagen de Perfil";
   buttonInput.textContent = "Registrarse";
 
-  inputUserName.required = true;
-  inputPassword.required = true;
-  inputEmail.required = true;
-  fileInput.required = true;
 
   eyeIcon.addEventListener("click", () => {
     if (inputPassword.type === "password") {
@@ -252,13 +241,11 @@ const submitRegister = async (
   body.append("email", inputEmail.value);
   body.append("profileimg", fileInput.files[0]);
 
-  const res = await fetch(
-    "https://proyecto10-six.vercel.app/api/users/register",
-    {
-      method: "POST",
-      body: body,
-    }
-  );
+  const res = await fetchApi({
+    endpoint: 'users/register',
+    method: 'POST',
+    data: body
+  });
 
   const pError = document.querySelector(".p-error");
   if (pError) {
@@ -310,16 +297,19 @@ const submitRegister = async (
     return;
   }
 
+  const userName = inputUserName.value;
+  const password = inputPassword.value;
+
+  const objetoFinal = {
+    userName,
+    password,
+  };
+
   if (res.ok) {
-    const loginRes = await fetch("https://proyecto10-six.vercel.app/api/users/login", {
-      method: "POST",
-      body: JSON.stringify({
-        userName: inputUserName.value,
-        password: inputPassword.value,
-      }),
-      headers: {
-        "Content-Type": "application/json",
-      },
+    const loginRes = await fetchApi({
+      endpoint: 'users/login',
+      method: 'POST',
+      data: objetoFinal
     });
 
     if (loginRes.ok) {

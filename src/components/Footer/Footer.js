@@ -1,5 +1,5 @@
 import { navigateTo } from "../../router/routes";
-import { isAdmin } from "../IsAdmin/IsAdmin";
+import { isAdmin } from "../../utils/IsAdmin/IsAdmin";
 import { viewAdminPanel } from "../viewAdminPanel/viewAdminPanel";
 import "./Footer.css";
 

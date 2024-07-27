@@ -2,7 +2,7 @@ import { changeUser } from "../ChangeUser/ChangeUser";
 import { createFormElements } from "../FormElementsUser/FormElementsUser";
 import "./ConfigUser.css";
 
-export const ConfigUser = (e) => {
+export const ConfigUser = (e, user) => {
   const storedUser = JSON.parse(localStorage.getItem("user"));
   const token = localStorage.getItem("tokenUser");
   if(e) {
@@ -15,7 +15,7 @@ export const ConfigUser = (e) => {
     modalconfigUser.id = "config-modal";
     modalconfigUser.classList.add("config-modal");
 
-    const form = createFormElements(e, storedUser, token, modalconfigUser);
+    const form = createFormElements(e, storedUser, token, modalconfigUser,user);
 
     modalconfigUser.append(form);
 

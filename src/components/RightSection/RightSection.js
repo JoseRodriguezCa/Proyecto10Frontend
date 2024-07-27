@@ -1,9 +1,8 @@
-import { Home } from "../../pages/Home/Home";
 import { EventEditModal } from "../EventEditModal/EventEditModal";
-import { DeleteEvent } from "../DeleteEvent/DeleteEvent";
-import { isAdmin } from "../IsAdmin/IsAdmin";
+import { isAdmin } from "../../utils/IsAdmin/IsAdmin";
 import { MapLocation } from "../MapLocation/MapLocation";
 import "./RightSection.css";
+import { DeleteEvent } from "../../utils/DeleteEvent/DeleteEvent";
 
 export const RightSection = (event, divMain, eventId, token, storedUser) => {
   const rightSection = document.createElement("div");

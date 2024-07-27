@@ -1,7 +1,7 @@
 import { Loader } from "../../components/Loader/Loader";
 import { PaginationButtons } from "../../components/PaginationButtons/PaginationButtons";
 import { printEvents } from "../../components/PrintEvents/PrintEvents";
-import { fetchPaginationEvents } from "../../utils/fetchPaginationEvents";
+import { fetchPaginationData } from "../../utils/fetchPaginationData";
 import "./Home.css";
 
 export const Home = async (e, page = 1) => {
@@ -12,7 +12,7 @@ export const Home = async (e, page = 1) => {
   const divMain = document.querySelector(".div-main");
   Loader(divMain);
 
-  const eventData = await fetchPaginationEvents(page);
+  const eventData = await fetchPaginationData("events",page);
 
   setTimeout(() => {
     divMain.innerHTML = "";
@@ -23,7 +23,7 @@ export const Home = async (e, page = 1) => {
     paginationContainer.classList.add("pagination-container");
 
     if(eventData.totalPages > 1) {
-      const eventsPaginationContainer = PaginationButtons(eventData.currentPage, eventData.totalPages, fetchPaginationEvents, printEvents, divMain, token, "/events", "page");
+      const eventsPaginationContainer = PaginationButtons(eventData.currentPage, eventData.totalPages, "Events", divMain, token, "/events", "page");
       paginationContainer.appendChild(eventsPaginationContainer);
     }
 

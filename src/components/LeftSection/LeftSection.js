@@ -1,6 +1,6 @@
 import "./LeftSection.css"
 import { AddAttender } from "../AddAttender/AddAttender";
-import { RemoveAttender } from "../RemoveAttender/RemoveAttender";
+import { RemoveAttender } from "../../utils/RemoveAttender/RemoveAttender";
 import { crearBoton } from "../BtnHeader/BtnHeader";
 import { AttenderContainer } from "../AttenderContainer/AttenderContainer";
 

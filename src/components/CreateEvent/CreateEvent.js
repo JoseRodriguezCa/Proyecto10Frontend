@@ -1,3 +1,4 @@
+import { createInput } from "../createInput/createInput";
 import { postEvent } from "../PostEvent/PostEvent";
 import "./CreateEvent.css";
 
@@ -26,30 +27,22 @@ export const CreateEvent = (e, options = {}) => {
 
     const titleLabel = document.createElement("label");
     titleLabel.textContent = "Título";
-    const titleInput = document.createElement("input");
-    titleInput.type = "text";
-    titleInput.name = "title";
+    const titleInput = createInput({name:"tittle"});
     titleInput.value = eventData.title || "";
 
     const dateLabel = document.createElement("label");
     dateLabel.textContent = "Fecha";
-    const dateInput = document.createElement("input");
-    dateInput.type = "date";
-    dateInput.name = "date";
+    const dateInput = createInput({name:"date",type:"date"});
     dateInput.value = eventData.date || "";
 
     const timeLabel = document.createElement("label");
     timeLabel.textContent = "Hora";
-    const timeInput = document.createElement("input");
-    timeInput.type = "time";
-    timeInput.name = "time";
+    const timeInput = createInput({name:"time",type:"time"});
     timeInput.value = eventData.time || "";
 
     const locationLabel = document.createElement("label");
     locationLabel.textContent = "Ubicación";
-    const locationInput = document.createElement("input");
-    locationInput.type = "text";
-    locationInput.name = "location";
+    const locationInput = createInput({name:"location"});
     locationInput.value = eventData.location || "";
 
     const descriptionLabel = document.createElement("label");
@@ -60,10 +53,7 @@ export const CreateEvent = (e, options = {}) => {
 
     const fileLabel = document.createElement("label");
     fileLabel.textContent = "Subir imagen (archivo)";
-    const fileInput = document.createElement("input");
-    fileInput.type = "file";
-    fileInput.name = "file";
-
+    const fileInput = createInput({name:"file",type:"file"});
     const submitButton = document.createElement("button");
     submitButton.type = "submit";
     submitButton.textContent = submitButtonText;

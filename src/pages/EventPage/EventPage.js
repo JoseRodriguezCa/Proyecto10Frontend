@@ -2,6 +2,7 @@ import "./EventPage.css";
 import { LeftSection } from "../../components/LeftSection/LeftSection";
 import { RightSection } from "../../components/RightSection/RightSection";
 import { TitleEvent } from "../../components/TitleEvent/TitleEvent";
+import { fetchApi } from "../../utils/fetchApi";
 
 export const EventPage = async (e, eventId) => {
   
@@ -9,7 +10,7 @@ export const EventPage = async (e, eventId) => {
     e.preventDefault();
   }
   const divMain = document.querySelector(".div-main");
-  const response = await fetch(`https://proyecto10-six.vercel.app/api/events/${eventId}`);
+  const response = await fetchApi({endpoint: `events/${eventId}`});
   const event = await response.json();
 
   divMain.classList.add("hidden");

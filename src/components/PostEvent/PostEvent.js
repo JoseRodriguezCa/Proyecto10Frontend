@@ -1,4 +1,5 @@
 import { Home } from "../../pages/Home/Home";
+import { fetchApi } from "../../utils/fetchApi";
 import { viewAdminPanel } from "../viewAdminPanel/viewAdminPanel";
 
 
@@ -43,13 +44,7 @@ export const postEvent = async (e, form) => {
   
     const token = localStorage.getItem("tokenUser");
   
-    const res = await fetch("https://proyecto10-six.vercel.app/api/events", {
-      method: "POST",
-      headers: {
-        "Authorization": `Bearer ${token}`,
-      },
-      body: body,
-    });
+    const res = await fetchApi({endpoint:"events",method:"POST",token,data:body});
   
     if (res.status === 400) {
       const errorResponse = await res.json();

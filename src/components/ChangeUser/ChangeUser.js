@@ -1,8 +1,7 @@
-import { Home } from "../../pages/Home/Home";
+
 import { navigateTo } from "../../router/routes";
-import { HeaderReload } from "../Header/Header";
-import { isAdmin } from "../IsAdmin/IsAdmin";
-import { viewAdminPanel } from "../viewAdminPanel/viewAdminPanel";
+import { fetchApi } from "../../utils/fetchApi";
+import { isAdmin } from "../../utils/IsAdmin/IsAdmin";
 
 
 export const changeUser = async (
@@ -14,9 +13,12 @@ export const changeUser = async (
   form,
   storedUser,
   token,
-  roleSelect
+  roleSelect,
+  user
 ) => {
   e.preventDefault();
+
+  const isAdminEditing = isAdmin();
 
   const body = new FormData();
   body.append("userName", userNameInput.value);
@@ -28,16 +30,10 @@ export const changeUser = async (
   } else {
     console.log("No se seleccionó un rol");
   }
-  const res = await fetch(
-    `https://proyecto10-six.vercel.app/api/users/${storedUser._id}`,
-    {
-      method: "PUT",
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      body: body,
-    }
-  );
+
+
+ const userId = user ? user._id : storedUser._id;
+  const res = await fetchApi({endpoint:`users/${userId}`,method:"PUT",token,data:body})
 
   if (!document.querySelector(".p-error")) {
     if (res.status === 400) {

@@ -2,6 +2,9 @@ import { navigateTo } from "../../router/routes";
 import "./PrintEvents.css";
 
 export const printEvents = (events, undenifed, divMain) => {
+  // if (!Array.isArray(events) || !events.every(event => event.description)) {
+  //   return;
+  // }
   divMain.style.height = "";
   let divEvents = divMain.querySelector(".div-events");
 
@@ -39,12 +42,16 @@ export const printEvents = (events, undenifed, divMain) => {
       const maxLength = 100;
       let truncatedDescription = event.description;
 
-      if (event.description.length > maxLength) {
-        truncatedDescription =
-          event.description.substring(0, maxLength) + "...";
+      if (event.description) {
+        if (event.description.length > maxLength) {
+          truncatedDescription =
+            event.description.substring(0, maxLength) + "...";
+        }
+  
+        description.textContent = truncatedDescription;
       }
 
-      description.textContent = truncatedDescription;
+
 
       const posterContainer = document.createElement("div");
       posterContainer.classList.add("poster-container");
